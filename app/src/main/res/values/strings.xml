@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">RACL - Rastreamento e Acompanhamento da Coleta de Lixo</string>
+    <string name="title_activity_maps">Mapa do turno</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tw_route_and_turn">Rota XPTO - Turno XPTO</string>
+    <string name="title_activity_main2">Main2Activity</string>
+</resources>
