@@ -7,44 +7,113 @@
     tools:context="com.example.hudso.racl.MainActivity">
 
     <LinearLayout
-        android:id="@+id/layoutBackground"
-        android:layout_width="368dp"
-        android:layout_height="495dp"
+        android:id="@+id/layout_main"
+        android:layout_width="wrap_content"
+        android:layout_height="587dp"
         android:orientation="vertical"
         android:weightSum="1"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="8dp">
 
-        <Button
-            android:id="@+id/btnMain"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Button"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            tools:ignore="HardcodedText"
-            tools:layout_editor_absoluteY="117dp" />
+        <ImageView
+            android:id="@+id/img_garbage"
+            android:layout_width="338dp"
+            android:layout_height="291dp"
+            android:layout_weight="0.01"
+            android:adjustViewBounds="false"
+            app:srcCompat="@mipmap/ic_launcher" />
 
         <TextView
-            android:id="@+id/label"
+            android:id="@+id/textView2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.04"
-            android:text="Hello World!"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="InefficientWeight,ObsoleteLayoutParam" />
+            android:layout_height="129dp"
+            android:layout_weight="0.27"
+            android:fontFamily="sans-serif-condensed"
+            android:text="@string/lb_description_racl"
+            android:textAlignment="center"
+            android:textSize="32sp" />
 
-        <LinearLayout
-            android:id="@+id/layoutFragment"
+        <RelativeLayout
+            android:id="@+id/btnSearch"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            tools:ignore="UselessLeaf"></LinearLayout>
+            android:layout_height="50dp"
+            android:layout_weight="0.30">
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="81dp"
+                android:layout_marginStart="81dp"
+                app:srcCompat="@android:drawable/ic_menu_agenda"
+                tools:layout_editor_absoluteX="90dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="130dp"
+                android:layout_height="35dp"
+                android:layout_alignLeft="@+id/imageView7"
+                android:layout_alignStart="@+id/imageView7"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="47dp"
+                android:layout_marginStart="47dp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/lb_btn_search"
+                android:textAlignment="center"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                tools:layout_editor_absoluteX="148dp"
+                tools:layout_editor_absoluteY="7dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/btnFollow"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="0.09">
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:srcCompat="@android:drawable/ic_menu_myplaces"
+                tools:layout_editor_absoluteX="90dp"
+                tools:layout_editor_absoluteY="0dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="80dp"
+                android:layout_marginStart="80dp" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="120dp"
+                android:layout_height="35dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="85dp"
+                android:layout_marginRight="85dp"
+                android:layout_weight="1"
+                android:autoText="false"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/lb_btn_follow"
+                android:textAlignment="center"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                tools:layout_editor_absoluteX="148dp"
+                tools:layout_editor_absoluteY="7dp" />
+        </RelativeLayout>
 
     </LinearLayout>
 

@@ -12,18 +12,30 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class Metodos {
 
-    public static LatLng getStatueOfLibertyPosition() {
+    private static Metodos instance;
+
+    // Singleton
+    private Metodos() {}
+
+    public static Metodos getInstance() {
+        if (instance == null) {
+            instance = new Metodos();
+        }
+        return instance;
+    }
+
+    public LatLng getStatueOfLibertyPosition() {
         return new LatLng(40.689247, -74.044502);
     }
 
-    public static LatLng getSydneyPosition() {
+    public LatLng getSydneyPosition() {
         return new LatLng(-34, 151);
     }
 
     /**
      * Adicionar marcador na Estátua da Liberdade no mapa.
      */
-    public static void addStatueOfLibertyMarkerOnMap(GoogleMap map) {
+    public void addStatueOfLibertyMarkerOnMap(GoogleMap map) {
 //        // TODO Hudson - Descobrir por quê existe esta linha de comando
 //        MapsInitializer.initialize(getBaseContext());
 
@@ -46,7 +58,7 @@ public class Metodos {
     /**
      * Adicionar marcador em Sydney no mapa.
      */
-    public static void addSydneyMarkerOnMap(GoogleMap map) {
+    public void addSydneyMarkerOnMap(GoogleMap map) {
         // Add a marker in Sydney and move the camera
         map.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
 
@@ -63,7 +75,7 @@ public class Metodos {
      * Mover a posição do mapa, para a view simples (plana) na posição indicada.
      * @param position
      */
-    public static void moveToMarkerOnSimpleView(GoogleMap map, LatLng position) {
+    public void moveToMarkerOnSimpleView(GoogleMap map, LatLng position) {
         map.moveCamera(CameraUpdateFactory.newLatLng(position));
     }
 
@@ -71,7 +83,7 @@ public class Metodos {
      * Mover a posição do mapa, para view customizada na posição indicada.
      * @param position
      */
-    public static void moveToMarkerOnCustomView(GoogleMap map, LatLng position) {
+    public void moveToMarkerOnCustomView(GoogleMap map, LatLng position) {
         // Customizar posição
         CameraPosition liberty =
                 CameraPosition.builder().target(position)

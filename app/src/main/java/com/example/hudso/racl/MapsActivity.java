@@ -98,20 +98,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
          **/
     }
 
+
+    public List<LatLng> getRouteLines(String idRoute) {
+        return null;
+    }
+
     public void drawLinesRoute() {
         List<LatLng> decodedPath = new ArrayList<>();
-
-//        decodedPath.add(new LatLng(-26.88665791301889, -49.09618478268385));
-//        decodedPath.add(new LatLng(-26.886526637132196, -49.09517459571362));
-//        decodedPath.add(new LatLng(-26.886891159092812, -49.09469179809094));
-//        decodedPath.add(new LatLng(-26.883331711814563, -49.0956449881196));
-//        decodedPath.add(new LatLng(-26.88331705872923, -49.09618478268385));
-//        decodedPath.add(new LatLng(-26.884531763149415, -49.0958783403039));
-//        decodedPath.add(new LatLng(-26.88361610091067, -49.09616868942977));
-//        decodedPath.add(new LatLng(-26.885169911348147, -49.09624245017767));
-//        decodedPath.add(new LatLng(-26.886304155554605, -49.09699078649282));
-//        decodedPath.add(new LatLng(-26.885434559380023, -49.095554798841476));
-//        decodedPath.add(new LatLng(-26.886654324613982, -49.09627664834262));
 
         decodedPath.add(new LatLng(-26.90029, -49.08502));
         decodedPath.add(new LatLng(-26.90015,-49.08482));

@@ -2,14 +2,15 @@ package com.example.hudso.racl;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.solver.widgets.WidgetContainer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button button;
 //    private FragmentManager fragmentManager;
 //    private FragmentActivity mapsFragment;
 
@@ -18,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        button = (Button) findViewById(R.id.btnMain);
+        View button = findViewById(R.id.btnMain);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
