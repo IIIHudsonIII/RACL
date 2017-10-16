@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.hudso.racl.outro.MapsActivity;
+
 public class MainActivity extends AppCompatActivity {
 
 //    private FragmentManager fragmentManager;
@@ -19,12 +21,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        View button = findViewById(R.id.btnMain);
+        View button = findViewById(R.id.btnSearch);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 /** Para abrir um AppCompatActivity **/
-                Intent it = new Intent(MainActivity.this, MapsActivity.class);
+                //Intent it = new Intent(MainActivity.this, MapsActivity.class);
+                Intent it = new Intent(MainActivity.this, FilterActivity.class);
                 startActivity(it);
 
 
@@ -38,8 +41,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //fragmentManager = FirstMapFragment.newInstance();
-
+        button = findViewById(R.id.btnFollow);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /** Para abrir um AppCompatActivity **/
+                //Intent it = new Intent(MainActivity.this, MapsActivity.class);
+                Intent it = new Intent(MainActivity.this, MapsActivity.class);
+                startActivity(it);
+            }
+        });
 
     }
 

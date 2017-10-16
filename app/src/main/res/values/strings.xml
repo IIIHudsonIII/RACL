@@ -5,16 +5,17 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="tw_route_and_turn">Rota XPTO - Turno XPTO</string>
 
-    <string name="lb_btn_search">Consulta</string>
-    <string name="lb_btn_follow">Rastreio</string>
-    <string name="lb_description_racl">Rastreamento e Acompanhamento da Coleta de Lixo</string>
+    <string name="btn_search_description">Consulta</string>
+    <string name="btn_follow_description">Rastreio</string>
+    <string name="caption_app_racl">Rastreamento e Acompanhamento da Coleta de Lixo</string>
 
-    <string name="lb_cidade">Cidade</string>
-    <string name="lb_endereco">Endereço</string>
-    <string name="lb_horario">Horário</string>
-    <string name="lb_option_default">Selecione...</string>
-    <string name="lb_btn_view">Visualizar</string>
+    <string name="caption_cidade">Cidade</string>
+    <string name="caption_endereco">Endereço</string>
+    <string name="caption_horario">Horário</string>
+    <string name="option_default">Selecione...</string>
+    <string name="btn_view_description">Visualizar</string>
 
-    <string name="lb_percurso">Percurso</string>
+    <string name="caption_percurso">Percurso</string>
+    <string name="title_activity_route">RouteActivity</string>
 
 </resources>

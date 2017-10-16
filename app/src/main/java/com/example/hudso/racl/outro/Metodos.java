@@ -1,4 +1,4 @@
-package com.example.hudso.racl;
+package com.example.hudso.racl.outro;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;

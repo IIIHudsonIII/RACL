@@ -1,8 +1,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.hudso.racl.MapsActivity2">
+    android:layout_height="match_parent">
+    <!--tools:context="com.example.hudso.racl.FilterActivity">-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,16 +17,15 @@
             android:layout_margin="10dp"
             android:layout_marginVertical="@android:dimen/dialog_min_width_major"
             android:scrollHorizontally="?attr/isLightTheme"
-            android:text="TextView"
+            android:text="Testando"
             android:textAlignment="center"
             android:textSize="24sp"
-            tools:ignore="HardcodedText"
-            tools:text="@string/tw_route_and_turn" />
+            tools:ignore="HardcodedText" />
 
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="500dp" />
     </LinearLayout>
 
 </FrameLayout>

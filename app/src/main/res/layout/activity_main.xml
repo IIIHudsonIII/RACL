@@ -32,7 +32,7 @@
             android:layout_height="129dp"
             android:layout_weight="0.27"
             android:fontFamily="sans-serif-condensed"
-            android:text="@string/lb_description_racl"
+            android:text="@string/caption_app_racl"
             android:textAlignment="center"
             android:textSize="32sp" />
 
@@ -65,7 +65,7 @@
                 android:layout_marginLeft="47dp"
                 android:layout_marginStart="47dp"
                 android:fontFamily="sans-serif-condensed"
-                android:text="@string/lb_btn_search"
+                android:text="@string/btn_search_description"
                 android:textAlignment="center"
                 android:textSize="28sp"
                 android:textStyle="bold"
@@ -106,7 +106,7 @@
                 android:layout_weight="1"
                 android:autoText="false"
                 android:fontFamily="sans-serif-condensed"
-                android:text="@string/lb_btn_follow"
+                android:text="@string/btn_follow_description"
                 android:textAlignment="center"
                 android:textSize="28sp"
                 android:textStyle="bold"

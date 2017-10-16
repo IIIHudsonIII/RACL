@@ -47,9 +47,18 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".outro.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".FilterActivity"></activity>
+        <activity android:name=".FilterActivity" />
+        <activity
+            android:name=".RouteActivity"
+            android:label="@string/title_activity_route"
+            android:parentActivityName=".FilterActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.hudso.racl.FilterActivity" />
+        </activity>
     </application>
 
 </manifest>
