@@ -9,9 +9,10 @@
     tools:context="com.example.hudso.racl.RouteActivity$PlaceholderFragment">
 
     <TextView
-        android:id="@+id/section_label"
+        android:id="@+id/tw_detail_route"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/caption_app_racl" />
+        android:text="@string/caption_app_racl"
+        android:textSize="18sp" />
 
 </RelativeLayout>

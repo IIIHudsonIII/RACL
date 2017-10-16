@@ -18,7 +18,7 @@ public class NetworkUtils {
         String retorno = "";
         try {
             URL apiEnd = new URL(url);
-            int codigoResposta;
+
             HttpURLConnection conexao;
             InputStream is;
 
@@ -28,8 +28,7 @@ public class NetworkUtils {
             conexao.setConnectTimeout(15000);
             conexao.connect();
 
-            codigoResposta = conexao.getResponseCode();
-            if(codigoResposta < HttpURLConnection.HTTP_BAD_REQUEST){
+            if(conexao.getResponseCode() < HttpURLConnection.HTTP_BAD_REQUEST){
                 is = conexao.getInputStream();
             }else{
                 is = conexao.getErrorStream();

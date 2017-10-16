@@ -10,7 +10,7 @@
 
     <fragment
         android:id="@+id/fragment_route"
-        android:name="com.example.hudso.racl.FirstMapFragment"
+        android:name="com.example.hudso.racl.InternalMapFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.16"

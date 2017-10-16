@@ -3,34 +3,24 @@ package com.example.hudso.racl;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.hudso.racl.outro.Metodos;
+import com.example.hudso.racl.outro.RouteBean;
+import com.example.hudso.racl.outro.SingletonTeste;
 import com.example.hudso.racl.outro.Utils;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.google.android.gms.maps.MapView;
 
 public class RouteActivity extends AppCompatActivity {
 
@@ -71,24 +61,6 @@ public class RouteActivity extends AppCompatActivity {
         download.execute();
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        Log.d("Hudson", id + " - " + item.getTitle());
-//        Toast.makeText(this.getBaseContext(), id + " - " + item.getTitle(), Toast.LENGTH_LONG);
-//
-//        //noinspection SimplifiableIfStatement
-//        /**if (id == R.id.action_settings) {
-//            return true;
-//        }*/
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -121,7 +93,7 @@ public class RouteActivity extends AppCompatActivity {
             if (section == 1) {
                 rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
-                TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+                TextView textView = (TextView) rootView.findViewById(R.id.tw_detail_route);
                 carregaCampinhoPorFavor = textView;
                 textView.setText(resultadoParaEuUsar);
 
@@ -132,8 +104,6 @@ public class RouteActivity extends AppCompatActivity {
             return rootView;
         }
     }
-
- private static TextView carregaCampinhoPorFavor = null;
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -172,9 +142,10 @@ public class RouteActivity extends AppCompatActivity {
 
     private ProgressDialog load;
     private static String resultadoParaEuUsar = "Não carregou";
+    private static TextView carregaCampinhoPorFavor = null;
 
 
-    private class GetJson extends AsyncTask<Void, Void, String> {
+    private class GetJson extends AsyncTask<Void, Void, RouteBean> {
 
         @Override
         protected void onPreExecute(){
@@ -182,19 +153,38 @@ public class RouteActivity extends AppCompatActivity {
         }
 
         @Override
-        protected String doInBackground(Void... params) {
-//            return new Utils().getInformacao("https://randomuser.me/api/0.7");
-//            return new Utils().getInformacao("https://drive.google.com/file/d/0B-4YWQESpZpsSWVVSnMxaExpUmM/view?usp=sharing");
-            return new Utils().getInformacao("https://drive.google.com/uc?id=0B-4YWQESpZpsZWw1eVhEMnVoZjg&export=download");
+        protected RouteBean doInBackground(Void... params) {
+//            return new Utils().getInfoRoute("https://randomuser.me/api/0.7");
+//            return new Utils().getInfoRoute("https://drive.google.com/file/d/0B-4YWQESpZpsSWVVSnMxaExpUmM/view?usp=sharing");
+//            return new Utils().getInfoRoute("https://drive.google.com/uc?id=0B-4YWQESpZpsZWw1eVhEMnVoZjg&export=download");
+            return new Utils().getInfoRoute("https://drive.google.com/uc?id=0B-4YWQESpZpsVFA3UkMtU1JJUlE&export=download");
         }
 
         @Override
-        protected void onPostExecute(String veio){
-            resultadoParaEuUsar = veio;
+        protected void onPostExecute(RouteBean route){
+            SingletonTeste.getInstance().setRoute(route);
 
-            if (carregaCampinhoPorFavor != null) {
-                carregaCampinhoPorFavor.setText(resultadoParaEuUsar);
+            Fragment fragment = (Fragment) RouteActivity.this.getSupportFragmentManager().getFragments().get(0);
+            if (fragment != null) {
+                TextView textView = (TextView) fragment.getActivity().findViewById(R.id.tw_detail_route);
+                if (textView != null) {
+                    textView.setText(route.toString());
+                }
             }
+
+            fragment = (Fragment) RouteActivity.this.getSupportFragmentManager().getFragments().get(1);
+            if (fragment != null) {
+                Metodos.getInstance().drawDynamicRoute(route);
+
+                TextView textView = (TextView) fragment.getActivity().findViewById(R.id.tw_internal_map);
+                if (textView != null) {
+                    textView.setText("Rota: " + route.getName());
+                }
+            }
+//            textView.setText(resultadoParaEuUsar);
+//            if (carregaCampinhoPorFavor != null) {
+//                carregaCampinhoPorFavor.setText(route.toString());
+//            }
 
             load.dismiss();
         }

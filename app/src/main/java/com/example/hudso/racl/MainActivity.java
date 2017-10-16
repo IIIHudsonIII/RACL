@@ -30,11 +30,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent it = new Intent(MainActivity.this, FilterActivity.class);
                 startActivity(it);
 
-
 //                LinearLayout v = ((LinearLayout) findViewById(R.id.layoutBackground));
 //
 //                android.support.v4.app.FragmentTransaction fragmentTrasaction = getSupportFragmentManager().beginTransaction();
-//                fragmentTrasaction.replace(R.id.layoutFragment, FirstMapFragment.instantiate(MainActivity.this, "teste"));
+//                fragmentTrasaction.replace(R.id.layoutFragment, InternalMapFragment.instantiate(MainActivity.this, "teste"));
 //                fragmentTrasaction.commit();
 //
 //                ((TextView) findViewById(R.id.label)).setText("Clicando em " + new Date().toString());
@@ -51,18 +50,5 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(it);
             }
         });
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Toast.makeText(this, "onResume", Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Toast.makeText(this, "onRestart", Toast.LENGTH_LONG).show();
     }
 }
