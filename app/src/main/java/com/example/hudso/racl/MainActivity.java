@@ -2,12 +2,8 @@ package com.example.hudso.racl;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.constraint.solver.widgets.WidgetContainer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.example.hudso.racl.outro.MapsActivity;
 
@@ -45,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 /** Para abrir um AppCompatActivity **/
-                //Intent it = new Intent(MainActivity.this, MapsActivity.class);
-                Intent it = new Intent(MainActivity.this, MapsActivity.class);
+//                Intent it = new Intent(MainActivity.this, MapsActivity.class);
+                Intent it = new Intent(MainActivity.this, FollowActivity.class);
                 startActivity(it);
             }
         });

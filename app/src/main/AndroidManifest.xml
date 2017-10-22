@@ -59,6 +59,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.hudso.racl.FilterActivity" />
         </activity>
+        <activity android:name=".FollowActivity"></activity>
     </application>
 
 </manifest>
