@@ -68,9 +68,7 @@ public class Metodos {
         // Add a marker in Sydney and move the camera
         map.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
 
-        MarkerOptions markerOptions = new MarkerOptions()
-                .position(getSydneyPosition())
-                .title("Marker in Sydney");
+        MarkerOptions markerOptions = new MarkerOptions().position(getSydneyPosition()).title("Marker in Sydney");
 
         map.addMarker(markerOptions);
 
@@ -157,10 +155,12 @@ public class Metodos {
         // Adicionar o marcador ao mapa
         MarkerOptions initialMarker = new MarkerOptions();
         initialMarker.position(decodedPath.get(0));
+        initialMarker.title("Início do trajeto ("+initialMarker.getPosition().latitude+"/"+initialMarker.getPosition().longitude+")");
         map.addMarker(initialMarker);
 
         MarkerOptions finalMarker = new MarkerOptions();
         finalMarker.position(decodedPath.get(decodedPath.size()-1));
+        finalMarker.title("Fim do trajeto ("+finalMarker.getPosition().latitude+"/"+finalMarker.getPosition().longitude+")");
         map.addMarker(finalMarker);
 
         map.addPolyline(
@@ -174,7 +174,7 @@ public class Metodos {
         CameraPosition liberty =
                 CameraPosition.builder().target(decodedPath.get(0))
                         // Zoom do mapa
-                        .zoom(16)
+                        .zoom(20)
                         //
                         .bearing(8)
                         // Inclinação

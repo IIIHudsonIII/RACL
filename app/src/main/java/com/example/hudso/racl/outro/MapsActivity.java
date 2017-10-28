@@ -45,13 +45,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-
-//        // TODO Hudson - Adicionar marcador em Sydney, mapa simples (plano)
-//        addSydneyMarkerOnMap();
-
-//        // TODO Hudson - Adicionar marcador na Estátua da Liberdade, mapa customizado
-//        addStatueOfLibertyMarkerOnMap();
-//
         map.setOnMapClickListener(
                 new GoogleMap.OnMapClickListener() {
                     @Override

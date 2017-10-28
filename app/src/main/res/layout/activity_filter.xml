@@ -15,16 +15,16 @@
         tools:layout_editor_absoluteY="8dp">
 
         <TextView
-            android:id="@+id/tw_endereco"
+            android:id="@+id/tw_cidade"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingTop="20dp"
-            android:text="@string/caption_endereco"
+            android:text="@string/caption_cidade"
             android:textSize="40sp"
             tools:layout_editor_absoluteX="53dp"
-            tools:layout_editor_absoluteY="197dp" />
+            tools:layout_editor_absoluteY="60dp" />
 
         <TextView
             android:id="@+id/textView8"
@@ -38,16 +38,16 @@
             tools:layout_editor_absoluteX="53dp" />
 
         <TextView
-            android:id="@+id/tw_cidade"
+            android:id="@+id/tw_endereco"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingTop="20dp"
-            android:text="@string/caption_cidade"
+            android:text="@string/caption_endereco"
             android:textSize="40sp"
             tools:layout_editor_absoluteX="53dp"
-            tools:layout_editor_absoluteY="60dp" />
+            tools:layout_editor_absoluteY="197dp" />
 
         <TextView
             android:id="@+id/textView13"

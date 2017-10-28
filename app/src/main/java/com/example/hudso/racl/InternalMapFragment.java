@@ -25,7 +25,7 @@ public class InternalMapFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_internal, container, false);
 
-        mMapView = (MapView) rootView.findViewById(R.id.mapView);
+        mMapView = rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
 
         mMapView.onResume(); // needed to get the map to display immediately
@@ -34,7 +34,9 @@ public class InternalMapFragment extends Fragment {
             MapsInitializer.initialize(getActivity().getApplicationContext());
         } catch (Exception e) {
             e.printStackTrace();
-        }mMapView.setActivated(false);
+        }
+
+        mMapView.setActivated(false);
 
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override

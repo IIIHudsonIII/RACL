@@ -9,9 +9,6 @@ import com.example.hudso.racl.outro.MapsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-//    private FragmentManager fragmentManager;
-//    private FragmentActivity mapsFragment;
-
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,17 +19,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 /** Para abrir um AppCompatActivity **/
-                //Intent it = new Intent(MainActivity.this, MapsActivity.class);
                 Intent it = new Intent(MainActivity.this, FilterActivity.class);
                 startActivity(it);
-
-//                LinearLayout v = ((LinearLayout) findViewById(R.id.layoutBackground));
-//
-//                android.support.v4.app.FragmentTransaction fragmentTrasaction = getSupportFragmentManager().beginTransaction();
-//                fragmentTrasaction.replace(R.id.layoutFragment, InternalMapFragment.instantiate(MainActivity.this, "teste"));
-//                fragmentTrasaction.commit();
-//
-//                ((TextView) findViewById(R.id.label)).setText("Clicando em " + new Date().toString());
             }
         });
 

@@ -1,6 +1,7 @@
 package com.example.hudso.racl;
 
 import android.app.ProgressDialog;
+import android.location.LocationListener;
 import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -164,52 +165,26 @@ public class RouteActivity extends AppCompatActivity {
         protected void onPostExecute(RouteBean route){
             SingletonTeste.getInstance().setRoute(route);
 
-            Fragment fragment = (Fragment) RouteActivity.this.getSupportFragmentManager().getFragments().get(0);
+            Fragment fragment = RouteActivity.this.getSupportFragmentManager().getFragments().get(0);
             if (fragment != null) {
-                TextView textView = (TextView) fragment.getActivity().findViewById(R.id.tw_detail_route);
+                TextView textView = fragment.getActivity().findViewById(R.id.tw_detail_route);
                 if (textView != null) {
                     textView.setText(route.toString());
                 }
             }
 
-            fragment = (Fragment) RouteActivity.this.getSupportFragmentManager().getFragments().get(1);
+            fragment = RouteActivity.this.getSupportFragmentManager().getFragments().get(1);
             if (fragment != null) {
                 Metodos.getInstance().drawDynamicRoute(route);
 
-                TextView textView = (TextView) fragment.getActivity().findViewById(R.id.tw_internal_map);
+                TextView textView = fragment.getActivity().findViewById(R.id.tw_internal_map);
                 if (textView != null) {
                     textView.setText("Rota: " + route.getName());
                 }
             }
-//            textView.setText(resultadoParaEuUsar);
-//            if (carregaCampinhoPorFavor != null) {
-//                carregaCampinhoPorFavor.setText(route.toString());
-//            }
 
             load.dismiss();
         }
     }
-//
-//    private PessoaObj parseJson(String json){
-//        try {
-//            PessoaObj pessoa = new PessoaObj();
-//
-//            JSONObject jsonObj = new JSONObject(json);
-//            JSONArray array = jsonObj.getJSONArray("results");
-//
-//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//            Date data;
-//
-//            JSONObject objArray = array.getJSONObject(0);
-//
-//            JSONObject obj = objArray.getJSONObject("user");
-//            //Atribui os objetos que estão nas camadas mais altas
-////            pessoa.setEmail(obj.getString("email"));
-//
-//            return pessoa;
-//        }catch (JSONException e){
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
+
 }
