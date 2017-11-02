@@ -21,6 +21,8 @@ import com.example.hudso.racl.outro.SingletonTeste;
 import com.example.hudso.racl.outro.TimerTeste;
 import com.example.hudso.racl.outro.Utils;
 
+import butterknife.BindView;
+
 import static com.example.hudso.racl.outro.Metodos.getInstance;
 
 public class RouteActivity extends AppCompatActivity {

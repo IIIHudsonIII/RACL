@@ -65,12 +65,12 @@ public class InternalMapFragment extends Fragment {
 
 
         MarkerOptions collectorMarker = Metodos.getInstance().createCustomMarkerOptions(
-                Metodos.getInstance().getDefaultListPoints().get(0), "Coletor", R.drawable.garbage_collector);
+                Metodos.getInstance().getDefaultListPoints().get(5), "Coletor", R.drawable.garbage_collector);
         Marker marker = Metodos.getInstance().addMarkerToMap(collectorMarker, true);
-        System.out.println("Hudson - ADICIONOU NO MAPA");
-        //SingletonTeste.getInstance().setMarkerCollector(marker);
-        //marker.remove();
-        //System.out.println("Hudson - REMOVEU DO MAPA");
+
+        System.out.println("Hudson - ADICIONOU COLLECTOR NO MAPA");
+
+        SingletonTeste.getInstance().setMarkerCollector(marker);
     }
 
     @Override
@@ -96,4 +96,42 @@ public class InternalMapFragment extends Fragment {
         super.onLowMemory();
         mMapView.onLowMemory();
     }
+
+/*
+    public void animateMarker(final Marker marker, final LatLng toPosition,
+                              final boolean hideMarker) {
+        final Handler handler = new Handler();
+        final long start = SystemClock.uptimeMillis();
+        Projection proj = mGoogleMapObject.getProjection();
+        Point startPoint = proj.toScreenLocation(marker.getPosition());
+        final LatLng startLatLng = proj.fromScreenLocation(startPoint);
+        final long duration = 500;
+
+        final Interpolator interpolator = new LinearInterpolator();
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                long elapsed = SystemClock.uptimeMillis() - start;
+                float t = interpolator.getInterpolation((float) elapsed
+                        / duration);
+                double lng = t * toPosition.longitude + (1 - t)
+                        * startLatLng.longitude;
+                double lat = t * toPosition.latitude + (1 - t)
+                        * startLatLng.latitude;
+                marker.setPosition(new LatLng(lat, lng));
+
+                if (t < 1.0) {
+                    // Post again 16ms later.
+                    handler.postDelayed(this, 16);
+                } else {
+                    if (hideMarker) {
+                        marker.setVisible(false);
+                    } else {
+                        marker.setVisible(true);
+                    }
+                }
+            }
+        });
+    }*/
 }

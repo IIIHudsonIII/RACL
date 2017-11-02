@@ -166,29 +166,30 @@ public class Metodos {
     }
 
     public void drawLinesRoute(List<LatLng> decodedPath) {
-        System.out.println("Hudson - drawLinesRoute");
+        try {
+            System.out.println("Hudson - drawLinesRoute");
 
-        GoogleMap map = SingletonTeste.getInstance().getMap();
-        if (map == null || decodedPath.size() == 0) {
-            return;
+            GoogleMap map = SingletonTeste.getInstance().getMap();
+            if (map == null || decodedPath.size() == 0) {
+                return;
+            }
+            map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+            // Desenha trajeto
+            map.addPolyline(
+                    new PolylineOptions()
+                            .addAll(decodedPath)
+                            .color(Color.parseColor("#3F51B5"))
+                            .width(30)
+            );
+            System.out.println("Hudson - ROTA DESENHADA NO MAPA");
+
+            addMarkerToMap(createCustomMarkerOptions(decodedPath.get(0), "Início", R.drawable.route_begin), true);
+            addMarkerToMap(createCustomMarkerOptions(decodedPath.get(decodedPath.size() - 1), "Término", R.drawable.route_end), false);
+            System.out.println("Hudson - ADICIONADOS MARCADORES DA ROTA NO MAPA");
+        } catch (Exception e){
+            System.out.println("Hudson - ERRO - drawLinesRoute: "+e.getMessage());
         }
-        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
-        System.out.println("Hudson - ROTA - Begin - "+decodedPath.size());
-        // Desenha trajeto
-        map.addPolyline(
-                new PolylineOptions()
-                        .addAll(decodedPath)
-                        .color(Color.parseColor("#3F51B5"))
-                        .width(30)
-        );
-        System.out.println("Hudson - ROTA - End");
-
-        System.out.println("Hudson - Marker - Início");
-        addMarkerToMap(createCustomMarkerOptions(decodedPath.get(0), "Início", R.drawable.route_begin), true);
-
-        System.out.println("Hudson - Marker - Término");
-        addMarkerToMap(createCustomMarkerOptions(decodedPath.get(decodedPath.size()-1), "Término", R.drawable.route_end), false);
     }
 
     public List<LatLng> getDefaultListPoints() {

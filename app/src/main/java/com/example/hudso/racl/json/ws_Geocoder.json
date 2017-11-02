@@ -1,0 +1,42 @@
+{
+   "predictions" : [
+      {
+         "description" : "Blumenau - SC, Brasil",
+         "id" : "373ec14f904f19ec4bdd88dac24c844cba2460dd",
+         "matched_substrings" : [
+            {
+               "length" : 6,
+               "offset" : 0
+            }
+         ],
+         "place_id" : "ChIJlTBci0Ae35QRRHYavCCF-6w",
+         "reference" : "CjQtAAAAUuFwUXG4wwGGtC7clPVzWB8Zsdpq7LL336sD8aqN4abfEoKkSoS7wDbUjEKae7xREhChfGjooDyN0CjLg0EL9nC-GhRkTW9EpkFp3Ll4dQAcihC-vWCi4A",
+         "structured_formatting" : {
+            "main_text" : "Blumenau",
+            "main_text_matched_substrings" : [
+               {
+                  "length" : 6,
+                  "offset" : 0
+               }
+            ],
+            "secondary_text" : "SC, Brasil"
+         },
+         "terms" : [
+            {
+               "offset" : 0,
+               "value" : "Blumenau"
+            },
+            {
+               "offset" : 11,
+               "value" : "SC"
+            },
+            {
+               "offset" : 15,
+               "value" : "Brasil"
+            }
+         ],
+         "types" : [ "locality", "political", "geocode" ]
+      }
+   ],
+   "status" : "OK"
+}

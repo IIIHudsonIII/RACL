@@ -1,0 +1,100 @@
+{	"routes" : [
+		{	
+			"name" : "route1",
+			"workDay" : "monday",
+			"initialHour" : "08:00",
+			"finalHour" : "10:00",
+			"points" : [
+                {	
+                	"description" : "Rua 01",
+                	"lat" : "-26.90029",
+                	"lng" : "-49.08502"
+                },
+                {	
+                	"description" : "Rua 02",
+                	"lat" : "-26.90015",
+                	"lng" : "-49.08482"
+                },
+                {	
+                	"description" : "Rua 03",
+                	"lat" : "-26.8999",
+                	"lng" : "-49.08452"
+                },
+                {	
+                	"description" : "Rua 04",
+                	"lat" : "-26.8997",
+                	"lng" : "-49.08425"
+                },
+                {	
+                	"description" : "Rua 05",
+                	"lat" : "-26.89951",
+                	"lng" : "-49.08399"
+                },
+                {	
+                	"description" : "Rua 06",
+                	"lat" : "-26.89951",
+                	"lng" : "-49.08399"
+                },
+                {	
+                	"description" : "Rua 07",
+                	"lat" : "-26.89923",
+                	"lng" : "-49.08422"
+                },
+                {	
+                	"description" : "Rua 08",
+                	"lat" : "-26.89916",
+                	"lng" : "-49.08427"
+                },
+                {	
+                	"description" : "Rua 09",
+                	"lat" : "-26.89893",
+                	"lng" : "-49.08439"
+                },
+                {	
+                	"description" : "Rua 10",
+                	"lat" : "-26.89873",
+                	"lng" : "-49.08451"
+                },
+                {	
+                	"description" : "Rua 11",
+                	"lat" : "-26.89867",
+                	"lng" : "-49.08453"
+                },
+                {	
+                	"description" : "Rua 12",
+                	"lat" : "-26.89867",
+                	"lng" : "-49.08453"
+                },
+                {	
+                	"description" : "Rua 13",
+                	"lat" : "-26.8989",
+                	"lng" : "-49.08484"
+                },
+                {	
+                	"description" : "Rua 14",
+                	"lat" : "000000",
+                	"lng" : "000000"
+                }
+			]
+        }/**,
+		{	
+			"name" : "route02",
+			"workDay" : "monday",
+			"initialHour" : "08:00",
+			"finalHour" : "10:00",
+			"points" : [
+                {	
+                	"description" : "Rua 01",
+                	"lat" : "+1",
+                	"lng" : "-1"
+                },
+                {	
+                	"description" : "Rua 02",
+                	"lat" : "+2",
+                	"lng" : "-2"
+                }
+			]
+        }**/
+    ],
+	"other" : "nothing"
+}

@@ -3,11 +3,15 @@ package com.example.hudso.racl;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.hudso.racl.outro.TentandoEnviarLocalizacao;
+
+import org.w3c.dom.Text;
+
+import butterknife.BindView;
 
 public class FollowActivity extends AppCompatActivity {
 
@@ -16,7 +20,7 @@ public class FollowActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow);
 
-        ((TextView) findViewById(R.id.msgPB)).setText("Hudson - Criando tela de Follow");
+        ((TextView) findViewById(R.id.lbFollow)).setText("Hudson - Criando tela de Follow");
 
         /** AJUSTAR AQUI HUDSON, agora está funcionando pelo clique no ProgressBar */
         findViewById(R.id.progressPB).setOnClickListener(new View.OnClickListener() {
@@ -26,14 +30,14 @@ public class FollowActivity extends AppCompatActivity {
                 view.setVisibility(View.INVISIBLE);
 
                 // Adicionado GIF img_follow_active ao ativar o rastreio.
-                findViewById(R.id.iv_follow).setVisibility(View.VISIBLE);
+                ((ImageView) findViewById(R.id.imgFollow)).setVisibility(View.VISIBLE);
                 Glide.with(FollowActivity.this)
                         .load(R.drawable.img_follow_active)
                         .asGif()
-                        .into((ImageView) findViewById(R.id.iv_follow));
+                        .into((ImageView) findViewById(R.id.imgFollow));
 
                 // Modificar a mensagem
-                ((TextView) findViewById(R.id.msgPB)).setText("Hudson - Rastreio ativado com sucesso.");
+                ((TextView) findViewById(R.id.lbFollow)).setText("Hudson - Rastreio ativado com sucesso.");
             }
         });
     }
