@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.example.hudso.racl.outro.MapsActivity;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override

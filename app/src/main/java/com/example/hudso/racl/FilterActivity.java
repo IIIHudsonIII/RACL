@@ -1,11 +1,9 @@
 package com.example.hudso.racl;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-
-import com.example.hudso.racl.outro.MapsActivity;
 
 public class FilterActivity extends AppCompatActivity {
 

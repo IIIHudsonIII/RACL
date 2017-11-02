@@ -1,6 +1,8 @@
 package com.example.hudso.racl.outro;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  * Created by hudso on 16/10/2017.
@@ -21,6 +23,7 @@ public class SingletonTeste {
 
     private RouteBean route;
     private GoogleMap map;
+    private Marker markerCollector;
 
     public void setRoute(RouteBean route) {
         this.route = route;
@@ -36,5 +39,13 @@ public class SingletonTeste {
 
     public GoogleMap getMap() {
         return map;
+    }
+
+    public void setMarkerCollector(Marker markerCollector) {
+        this.markerCollector = markerCollector;
+    }
+
+    public Marker getMarkerCollector() {
+        return markerCollector;
     }
 }

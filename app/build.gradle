@@ -28,6 +28,7 @@ dependencies {
     // TODO Hudson - Adicionar compilação abaixo para poder utilizar o maps
     compile 'com.google.android.gms:play-services-base:11.0.4'
     compile 'com.google.android.gms:play-services-maps:11.0.4'
+    compile 'com.google.android.gms:play-services-location:8.4.0'
     compile 'com.google.android.gms:play-services-location:11.0.4'
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:support-v4:26.+'

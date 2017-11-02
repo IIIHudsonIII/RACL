@@ -2,10 +2,13 @@ package com.example.hudso.racl.outro;
 
 import android.graphics.Color;
 
+import com.example.hudso.racl.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -102,9 +105,93 @@ public class Metodos {
         map.moveCamera(CameraUpdateFactory.newCameraPosition(liberty));
     }
 
+    public MarkerOptions createCustomMarkerOptions(LatLng position, String title, int rDrawableIcon) {
+        if (position == null) {
+            position = new LatLng(-26.89951, -49.08399);
+        }
+        if (rDrawableIcon == 0) {
+            rDrawableIcon = R.drawable.garbage_collector;
+        }
 
-    public void drawDynamicRoute() {
+        // Adicionar o marcador ao mapa
+        MarkerOptions marker = new MarkerOptions();
+        marker.position(position)
+                .title(title)
+                .icon(BitmapDescriptorFactory.fromResource(rDrawableIcon))
+                .snippet("(" + position.latitude + "/" + position.longitude + ")")
+                .anchor(0.5f, 1)
+                .zIndex(1.0f);
 
+        return marker;
+    }
+
+    public Marker addMarkerToMap(MarkerOptions markerOptions, boolean locate) {
+        GoogleMap map = SingletonTeste.getInstance().getMap();
+        if (map == null) {
+            return null;
+        }
+
+        // Adicionar marcador customizado ao mapa
+        Marker marker = map.addMarker(markerOptions);
+
+        if (locate) {
+            CameraPosition liberty =
+                    CameraPosition.builder().target(marker.getPosition())
+                            // Zoom do mapa
+                            .zoom(20)
+                            //
+                            .bearing(8)
+                            // Inclinação
+                            .tilt(45)
+                            .build();
+
+            map.moveCamera(CameraUpdateFactory.newCameraPosition(liberty));
+        }
+
+        return marker;
+    }
+
+    /**
+     * Traçar a rota de pontos no mapa (trajeto).
+     * @param route
+     */
+    public void drawDynamicRoute(RouteBean route) {
+        List<LatLng> decodedPath = new ArrayList<>(30);
+
+        for (PointBean point : route.getPoints()) {
+            decodedPath.add(new LatLng(point.getLat(), point.getLng()));
+        }
+
+        drawLinesRoute(decodedPath);
+    }
+
+    public void drawLinesRoute(List<LatLng> decodedPath) {
+        System.out.println("Hudson - drawLinesRoute");
+
+        GoogleMap map = SingletonTeste.getInstance().getMap();
+        if (map == null || decodedPath.size() == 0) {
+            return;
+        }
+        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+        System.out.println("Hudson - ROTA - Begin - "+decodedPath.size());
+        // Desenha trajeto
+        map.addPolyline(
+                new PolylineOptions()
+                        .addAll(decodedPath)
+                        .color(Color.parseColor("#3F51B5"))
+                        .width(30)
+        );
+        System.out.println("Hudson - ROTA - End");
+
+        System.out.println("Hudson - Marker - Início");
+        addMarkerToMap(createCustomMarkerOptions(decodedPath.get(0), "Início", R.drawable.route_begin), true);
+
+        System.out.println("Hudson - Marker - Término");
+        addMarkerToMap(createCustomMarkerOptions(decodedPath.get(decodedPath.size()-1), "Término", R.drawable.route_end), false);
+    }
+
+    public List<LatLng> getDefaultListPoints() {
         List<LatLng> decodedPath = new ArrayList<>();
 
         decodedPath.add(new LatLng(-26.90029, -49.08502));
@@ -121,67 +208,7 @@ public class Metodos {
         decodedPath.add(new LatLng(-26.89867,-49.08453));
         decodedPath.add(new LatLng(-26.8989,-49.08484));
 
-        drawLinesRoute(decodedPath);
-    }
-
-    public void drawDynamicRoute(RouteBean route) {
-        List<LatLng> decodedPath = new ArrayList<>(30);
-
-        for (PointBean point : route.getPoints()) {
-            decodedPath.add(new LatLng(point.getLat(), point.getLng()));
-        }
-        /**
-         ArrayList<LatLng> markerPoints = new ArrayList<LatLng>();
-         markerPoints.add(point);
-
-         // Creating MarkerOptions
-         MarkerOptions options = new MarkerOptions();
-
-         // Setting the position of the marker
-         options.position(point);
-         **/
-
-        drawLinesRoute(decodedPath);
-    }
-
-    public void drawLinesRoute(List<LatLng> decodedPath) {
-
-        GoogleMap map = SingletonTeste.getInstance().getMap();
-        if (map == null || decodedPath.size() == 0) {
-            return;
-        }
-        map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
-        // Adicionar o marcador ao mapa
-        MarkerOptions initialMarker = new MarkerOptions();
-        initialMarker.position(decodedPath.get(0));
-        initialMarker.title("Início do trajeto ("+initialMarker.getPosition().latitude+"/"+initialMarker.getPosition().longitude+")");
-        map.addMarker(initialMarker);
-
-        MarkerOptions finalMarker = new MarkerOptions();
-        finalMarker.position(decodedPath.get(decodedPath.size()-1));
-        finalMarker.title("Fim do trajeto ("+finalMarker.getPosition().latitude+"/"+finalMarker.getPosition().longitude+")");
-        map.addMarker(finalMarker);
-
-        map.addPolyline(
-                new PolylineOptions()
-                        .addAll(decodedPath)
-                        .color(Color.RED)
-                        .width(10)
-//                        .geodesic(true)
-        );
-
-        CameraPosition liberty =
-                CameraPosition.builder().target(decodedPath.get(0))
-                        // Zoom do mapa
-                        .zoom(20)
-                        //
-                        .bearing(8)
-                        // Inclinação
-                        .tilt(45)
-                        .build();
-
-        map.moveCamera(CameraUpdateFactory.newCameraPosition(liberty));
+        return decodedPath;
     }
 
 //    public void onMapClick(LatLng latLng) {

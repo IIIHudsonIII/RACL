@@ -1,27 +1,27 @@
 package com.example.hudso.racl;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.location.LocationListener;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.TextView;
 
-import com.example.hudso.racl.outro.Metodos;
 import com.example.hudso.racl.outro.RouteBean;
 import com.example.hudso.racl.outro.SingletonTeste;
+import com.example.hudso.racl.outro.TimerTeste;
 import com.example.hudso.racl.outro.Utils;
-import com.google.android.gms.maps.MapView;
+
+import static com.example.hudso.racl.outro.Metodos.getInstance;
 
 public class RouteActivity extends AppCompatActivity {
 
@@ -60,6 +60,8 @@ public class RouteActivity extends AppCompatActivity {
         GetJson download = new GetJson();
         //Chama Async Task
         download.execute();
+
+        new TimerTeste().start();
     }
 
     /**
@@ -149,7 +151,7 @@ public class RouteActivity extends AppCompatActivity {
     private class GetJson extends AsyncTask<Void, Void, RouteBean> {
 
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
             load = ProgressDialog.show(RouteActivity.this, "Por favor Aguarde ...", "Recuperando Informações do Servidor...");
         }
 
@@ -161,8 +163,9 @@ public class RouteActivity extends AppCompatActivity {
             return new Utils().getInfoRoute("https://drive.google.com/uc?id=0B-4YWQESpZpsVFA3UkMtU1JJUlE&export=download");
         }
 
+        @SuppressLint("RestrictedApi")
         @Override
-        protected void onPostExecute(RouteBean route){
+        protected void onPostExecute(RouteBean route) {
             SingletonTeste.getInstance().setRoute(route);
 
             Fragment fragment = RouteActivity.this.getSupportFragmentManager().getFragments().get(0);
@@ -175,16 +178,37 @@ public class RouteActivity extends AppCompatActivity {
 
             fragment = RouteActivity.this.getSupportFragmentManager().getFragments().get(1);
             if (fragment != null) {
-                Metodos.getInstance().drawDynamicRoute(route);
+                getInstance().drawDynamicRoute(route);
 
                 TextView textView = fragment.getActivity().findViewById(R.id.tw_internal_map);
                 if (textView != null) {
                     textView.setText("Rota: " + route.getName());
                 }
             }
-
             load.dismiss();
+
+/*
+            // INICIO - Tudo teste aqui
+            mainHandler = new Handler(RouteActivity.this.getBaseContext().getMainLooper());
+            timerTeste = new TimerTeste();
+            mainHandler.post(timerTeste);
+            // FIM - Tudo teste aqui*/
         }
     }
 
+    // INICIO - Tudo teste aqui
+    Handler mainHandler = null;
+    TimerTeste timerTeste = null;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (timerTeste != null) {
+            timerTeste = null;
+        }
+        if (mainHandler != null) {
+            mainHandler = null;
+        }
+    }
+    // FIM - Tudo teste aqui
 }

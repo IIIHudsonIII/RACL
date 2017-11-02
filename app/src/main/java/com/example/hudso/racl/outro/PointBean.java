@@ -1,5 +1,7 @@
 package com.example.hudso.racl.outro;
 
+import com.google.android.gms.maps.model.LatLng;
+
 /**
  * Created by hudso on 16/10/2017.
  */
@@ -35,6 +37,10 @@ public class PointBean {
 
     public void setLng(double lng) {
         this.lng = lng;
+    }
+
+    public LatLng getLatLng() {
+        return new LatLng(getLat(), getLng());
     }
 
     public String getDescription() {

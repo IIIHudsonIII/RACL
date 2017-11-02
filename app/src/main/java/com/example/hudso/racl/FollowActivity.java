@@ -1,6 +1,7 @@
 package com.example.hudso.racl;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -8,12 +9,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.hudso.racl.outro.TentandoEnviarLocalizacao;
 
-public class FollowActivity extends TentandoEnviarLocalizacao {
+public class FollowActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow);
+
+        ((TextView) findViewById(R.id.msgPB)).setText("Hudson - Criando tela de Follow");
 
         /** AJUSTAR AQUI HUDSON, agora está funcionando pelo clique no ProgressBar */
         findViewById(R.id.progressPB).setOnClickListener(new View.OnClickListener() {
@@ -30,7 +33,7 @@ public class FollowActivity extends TentandoEnviarLocalizacao {
                         .into((ImageView) findViewById(R.id.iv_follow));
 
                 // Modificar a mensagem
-                ((TextView) findViewById(R.id.msgPB)).setText("Rastreio ativado com sucesso.");
+                ((TextView) findViewById(R.id.msgPB)).setText("Hudson - Rastreio ativado com sucesso.");
             }
         });
     }
