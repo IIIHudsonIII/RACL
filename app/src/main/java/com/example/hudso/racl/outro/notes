@@ -1,3 +1,26 @@
 - Postman = validação REST
+
 - GoogleCloud = Servidor de aplicação+Banco, Front-End Web
+35.196.60.17:8080/master
+
+- https://mlab.com/ = Banco de dados MongoDB
+
 - ___ = App Android
+
+
+
+https://maps.googleapis.com/maps/api/place/ne‌​arbysearch/json?
+
+
+
+* geocode instrui o serviço Places a retornar apenas resultados de geocodificação em vez de resultados de empresas.
+* address instrui o serviço Places a retornar apenas resultados de geocodificação com um endereço preciso.
+* establishment instrui o serviço Places a retornar apenas resultados de empresas.
+* a coleção de tipos (regions) instrui o serviço Places a retornar qualquer resultado que corresponda aos seguintes tipos:
+   - locality
+      - sublocality
+   - postal_code
+   - country
+   - administrative_area1
+   - administrative_area2
+* a coleção de tipos (cities) instrui o serviço Places a retornar resultados que correspondam a locality ou administrative_area_3.

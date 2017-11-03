@@ -2,7 +2,6 @@ package com.example.hudso.racl.outro;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  * Created by hudso on 16/10/2017.
@@ -12,7 +11,8 @@ public class SingletonTeste {
 
     private static SingletonTeste instance;
 
-    private SingletonTeste() {}
+    private SingletonTeste() {
+    }
 
     public static SingletonTeste getInstance() {
         if (instance == null) {

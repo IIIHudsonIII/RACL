@@ -1,21 +1,21 @@
 package com.example.hudso.racl;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.hudso.racl.outro.Metodos;
+import com.example.hudso.racl.outro.PerformBackgroundTask;
 import com.example.hudso.racl.outro.SingletonTeste;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
-import static com.example.hudso.racl.outro.Metodos.getInstance;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class InternalMapFragment extends Fragment {
 
@@ -63,7 +63,7 @@ public class InternalMapFragment extends Fragment {
         map = googleMap;
         SingletonTeste.getInstance().setMap(googleMap);
 
-
+/**
         MarkerOptions collectorMarker = Metodos.getInstance().createCustomMarkerOptions(
                 Metodos.getInstance().getDefaultListPoints().get(5), "Coletor", R.drawable.garbage_collector);
         Marker marker = Metodos.getInstance().addMarkerToMap(collectorMarker, true);
@@ -71,6 +71,9 @@ public class InternalMapFragment extends Fragment {
         System.out.println("Hudson - ADICIONOU COLLECTOR NO MAPA");
 
         SingletonTeste.getInstance().setMarkerCollector(marker);
+ **/
+
+        callAsynchronousTask();
     }
 
     @Override
@@ -97,41 +100,25 @@ public class InternalMapFragment extends Fragment {
         mMapView.onLowMemory();
     }
 
-/*
-    public void animateMarker(final Marker marker, final LatLng toPosition,
-                              final boolean hideMarker) {
+    public void callAsynchronousTask() {
         final Handler handler = new Handler();
-        final long start = SystemClock.uptimeMillis();
-        Projection proj = mGoogleMapObject.getProjection();
-        Point startPoint = proj.toScreenLocation(marker.getPosition());
-        final LatLng startLatLng = proj.fromScreenLocation(startPoint);
-        final long duration = 500;
-
-        final Interpolator interpolator = new LinearInterpolator();
-
-        handler.post(new Runnable() {
+        Timer timer = new Timer();
+        TimerTask doAsynchronousTask = new TimerTask() {
             @Override
             public void run() {
-                long elapsed = SystemClock.uptimeMillis() - start;
-                float t = interpolator.getInterpolation((float) elapsed
-                        / duration);
-                double lng = t * toPosition.longitude + (1 - t)
-                        * startLatLng.longitude;
-                double lat = t * toPosition.latitude + (1 - t)
-                        * startLatLng.latitude;
-                marker.setPosition(new LatLng(lat, lng));
-
-                if (t < 1.0) {
-                    // Post again 16ms later.
-                    handler.postDelayed(this, 16);
-                } else {
-                    if (hideMarker) {
-                        marker.setVisible(false);
-                    } else {
-                        marker.setVisible(true);
+                handler.post(new Runnable() {
+                    public void run() {
+                        try {
+                            PerformBackgroundTask performBackgroundTask = new PerformBackgroundTask();
+                            // PerformBackgroundTask this class is the class that extends AsynchTask
+                            performBackgroundTask.execute();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
+                });
             }
-        });
-    }*/
+        };
+        timer.schedule(doAsynchronousTask, 0, 2000); //execute in every 3000 ms
+    }
 }

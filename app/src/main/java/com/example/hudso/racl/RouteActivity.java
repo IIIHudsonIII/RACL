@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,10 +17,7 @@ import android.widget.TextView;
 
 import com.example.hudso.racl.outro.RouteBean;
 import com.example.hudso.racl.outro.SingletonTeste;
-import com.example.hudso.racl.outro.TimerTeste;
 import com.example.hudso.racl.outro.Utils;
-
-import butterknife.BindView;
 
 import static com.example.hudso.racl.outro.Metodos.getInstance;
 
@@ -62,8 +58,6 @@ public class RouteActivity extends AppCompatActivity {
         GetJson download = new GetJson();
         //Chama Async Task
         download.execute();
-
-        new TimerTeste().start();
     }
 
     /**
@@ -188,29 +182,6 @@ public class RouteActivity extends AppCompatActivity {
                 }
             }
             load.dismiss();
-
-/*
-            // INICIO - Tudo teste aqui
-            mainHandler = new Handler(RouteActivity.this.getBaseContext().getMainLooper());
-            timerTeste = new TimerTeste();
-            mainHandler.post(timerTeste);
-            // FIM - Tudo teste aqui*/
         }
     }
-
-    // INICIO - Tudo teste aqui
-    Handler mainHandler = null;
-    TimerTeste timerTeste = null;
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (timerTeste != null) {
-            timerTeste = null;
-        }
-        if (mainHandler != null) {
-            mainHandler = null;
-        }
-    }
-    // FIM - Tudo teste aqui
 }

@@ -1,8 +1,6 @@
 package com.example.hudso.racl.outro;
 
 import android.content.Context;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
@@ -80,6 +78,7 @@ public class GooglePlacesAutocompleteAdapter extends ArrayAdapter implements Fil
 
     /**
      * http://codetheory.in/google-place-api-autocomplete-service-in-android-application/
+     *
      * @param input
      * @return
      */
@@ -131,7 +130,7 @@ public class GooglePlacesAutocompleteAdapter extends ArrayAdapter implements Fil
                 //System.out.println("Hudson - JSON - "+String.valueOf(predsJsonArray.getJSONObject(i).toString()));
 
                 System.out.println("Hudson - ============================================================");
-                System.out.println("Hudson - "+predsJsonArray.getJSONObject(i).getString("description"));
+                System.out.println("Hudson - " + predsJsonArray.getJSONObject(i).getString("description"));
                 resultList.add(predsJsonArray.getJSONObject(i).getString("description"));
 
                 //JSONObject city = predsJsonArray.getJSONObject(i).getJSONObject("structured_formatting");

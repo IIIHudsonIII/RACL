@@ -24,7 +24,8 @@ public class Metodos {
     private static Metodos instance;
 
     // Singleton
-    private Metodos() {}
+    private Metodos() {
+    }
 
     public static Metodos getInstance() {
         if (instance == null) {
@@ -80,6 +81,7 @@ public class Metodos {
 
     /**
      * Mover a posição do mapa, para a view simples (plana) na posição indicada.
+     *
      * @param position
      */
     public void moveToMarkerOnSimpleView(GoogleMap map, LatLng position) {
@@ -88,6 +90,7 @@ public class Metodos {
 
     /**
      * Mover a posição do mapa, para view customizada na posição indicada.
+     *
      * @param position
      */
     public void moveToMarkerOnCustomView(GoogleMap map, LatLng position) {
@@ -153,6 +156,7 @@ public class Metodos {
 
     /**
      * Traçar a rota de pontos no mapa (trajeto).
+     *
      * @param route
      */
     public void drawDynamicRoute(RouteBean route) {
@@ -187,8 +191,8 @@ public class Metodos {
             addMarkerToMap(createCustomMarkerOptions(decodedPath.get(0), "Início", R.drawable.route_begin), true);
             addMarkerToMap(createCustomMarkerOptions(decodedPath.get(decodedPath.size() - 1), "Término", R.drawable.route_end), false);
             System.out.println("Hudson - ADICIONADOS MARCADORES DA ROTA NO MAPA");
-        } catch (Exception e){
-            System.out.println("Hudson - ERRO - drawLinesRoute: "+e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Hudson - ERRO - drawLinesRoute: " + e.getMessage());
         }
     }
 
@@ -196,34 +200,19 @@ public class Metodos {
         List<LatLng> decodedPath = new ArrayList<>();
 
         decodedPath.add(new LatLng(-26.90029, -49.08502));
-        decodedPath.add(new LatLng(-26.90015,-49.08482));
-        decodedPath.add(new LatLng(-26.8999,-49.08452));
-        decodedPath.add(new LatLng(-26.8997,-49.08425));
-        decodedPath.add(new LatLng(-26.89951,-49.08399));
-        decodedPath.add(new LatLng(-26.89951,-49.08399));
-        decodedPath.add(new LatLng(-26.89923,-49.08422));
-        decodedPath.add(new LatLng(-26.89916,-49.08427));
-        decodedPath.add(new LatLng(-26.89893,-49.08439));
-        decodedPath.add(new LatLng(-26.89873,-49.08451));
-        decodedPath.add(new LatLng(-26.89867,-49.08453));
-        decodedPath.add(new LatLng(-26.89867,-49.08453));
-        decodedPath.add(new LatLng(-26.8989,-49.08484));
+        decodedPath.add(new LatLng(-26.90015, -49.08482));
+        decodedPath.add(new LatLng(-26.8999, -49.08452));
+        decodedPath.add(new LatLng(-26.8997, -49.08425));
+        decodedPath.add(new LatLng(-26.89951, -49.08399));
+        decodedPath.add(new LatLng(-26.89951, -49.08399));
+        decodedPath.add(new LatLng(-26.89923, -49.08422));
+        decodedPath.add(new LatLng(-26.89916, -49.08427));
+        decodedPath.add(new LatLng(-26.89893, -49.08439));
+        decodedPath.add(new LatLng(-26.89873, -49.08451));
+        decodedPath.add(new LatLng(-26.89867, -49.08453));
+        decodedPath.add(new LatLng(-26.89867, -49.08453));
+        decodedPath.add(new LatLng(-26.8989, -49.08484));
 
         return decodedPath;
     }
-
-//    public void onMapClick(LatLng latLng) {
-//        String text = "decodedPath.add(new LatLng(" + latLng.latitude + ", " + String.valueOf(latLng.longitude) + "));";
-//        Toast.makeText(getContext(), text, Toast.LENGTH_LONG);
-//
-//        MarkerOptions markerOptions = new MarkerOptions();
-//        markerOptions.position(latLng);
-//
-//        // Adicionar o marcador ao mapa
-//        map.addMarker(markerOptions);
-//
-//        drawLinesRoute();
-//
-//        Log.println(Log.WARN, "Click ", text);
-//    }
 }

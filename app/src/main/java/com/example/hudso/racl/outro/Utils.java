@@ -9,7 +9,7 @@ import org.json.JSONObject;
 public class Utils {
 
     public RouteBean getInfoRoute(String url) {
-        String json = NetworkUtils.getJSONFromAPI(url);
+        String json = NetworkUtils.getJSONFromAPI(url, NetworkUtils.GET);
         Log.i("Searching routes ...", json);
         return parseJson(json);
     }
