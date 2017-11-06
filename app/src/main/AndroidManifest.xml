@@ -15,6 +15,7 @@
     <!--TODO Hudson - Liberar uso do GPS-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!--<uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />-->
 
 
     <!-- TODO Hudson - Tentar descobrir o objetivo deste bloco -->

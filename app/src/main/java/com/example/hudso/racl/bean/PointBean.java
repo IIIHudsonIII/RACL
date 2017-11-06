@@ -1,4 +1,4 @@
-package com.example.hudso.racl.outro;
+package com.example.hudso.racl.bean;
 
 import com.google.android.gms.maps.model.LatLng;
 

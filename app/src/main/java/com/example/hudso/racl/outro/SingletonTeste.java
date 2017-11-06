@@ -1,5 +1,6 @@
 package com.example.hudso.racl.outro;
 
+import com.example.hudso.racl.bean.RouteBean;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 

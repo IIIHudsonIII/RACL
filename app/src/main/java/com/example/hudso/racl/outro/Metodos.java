@@ -3,6 +3,8 @@ package com.example.hudso.racl.outro;
 import android.graphics.Color;
 
 import com.example.hudso.racl.R;
+import com.example.hudso.racl.bean.PointBean;
+import com.example.hudso.racl.bean.RouteBean;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;

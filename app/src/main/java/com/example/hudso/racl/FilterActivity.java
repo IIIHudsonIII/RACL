@@ -19,8 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class FilterActivity extends AppCompatActivity
-        implements View.OnClickListener {
+public class FilterActivity extends AppCompatActivity implements View.OnClickListener {
 
     @BindView(R.id.btnView)
     View btnView;
@@ -39,7 +38,7 @@ public class FilterActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String address = (String) parent.getItemAtPosition(position);
                 LatLng latLng = getLocationFromAddress(address);
-                String desc = " ("+latLng.latitude+"/"+latLng.longitude+")";
+                String desc = " (" + latLng.latitude + "/" + latLng.longitude + ")";
                 Toast.makeText(FilterActivity.this, address + desc, Toast.LENGTH_SHORT).show();
             }
         });
@@ -47,7 +46,7 @@ public class FilterActivity extends AppCompatActivity
 
     @Override
     @OnClick(R.id.btnView)
-    public void onClick(View view) {
+    public void onClick(View v) {
         Intent it = new Intent(FilterActivity.this, RouteActivity.class);
         startActivity(it);
     }

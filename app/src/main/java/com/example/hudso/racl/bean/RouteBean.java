@@ -1,4 +1,4 @@
-package com.example.hudso.racl.outro;
+package com.example.hudso.racl.bean;
 
 import java.util.ArrayList;
 import java.util.List;

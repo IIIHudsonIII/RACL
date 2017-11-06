@@ -15,9 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.hudso.racl.outro.RouteBean;
+import com.example.hudso.racl.bean.RouteBean;
 import com.example.hudso.racl.outro.SingletonTeste;
-import com.example.hudso.racl.outro.Utils;
+import com.example.hudso.racl.utils.Utils;
 
 import static com.example.hudso.racl.outro.Metodos.getInstance;
 
@@ -154,8 +154,6 @@ public class RouteActivity extends AppCompatActivity {
         @Override
         protected RouteBean doInBackground(Void... params) {
 //            return new Utils().getInfoRoute("https://randomuser.me/api/0.7");
-//            return new Utils().getInfoRoute("https://drive.google.com/file/d/0B-4YWQESpZpsSWVVSnMxaExpUmM/view?usp=sharing");
-//            return new Utils().getInfoRoute("https://drive.google.com/uc?id=0B-4YWQESpZpsZWw1eVhEMnVoZjg&export=download");
             return new Utils().getInfoRoute("https://drive.google.com/uc?id=0B-4YWQESpZpsVFA3UkMtU1JJUlE&export=download");
         }
 

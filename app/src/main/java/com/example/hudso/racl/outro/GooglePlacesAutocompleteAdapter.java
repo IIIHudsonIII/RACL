@@ -107,7 +107,7 @@ public class GooglePlacesAutocompleteAdapter extends ArrayAdapter implements Fil
                 jsonResults.append(buff, 0, read);
             }
         } catch (MalformedURLException e) {
-            Log.e(LOG_TAG, "Error processing Places API URL", e);
+            Log.e(LOG_TAG, "Error processing Places API URL_DEFAULT", e);
             return resultList;
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error connecting to Places API", e);
