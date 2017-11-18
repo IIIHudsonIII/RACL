@@ -162,13 +162,14 @@ public class Metodos {
      * @param route
      */
     public void drawDynamicRoute(RouteBean route) {
-        List<LatLng> decodedPath = new ArrayList<>(30);
-
-        for (PointBean point : route.getPoints()) {
-            decodedPath.add(new LatLng(point.getLat(), point.getLng()));
-        }
-
-        drawLinesRoute(decodedPath);
+//        List<LatLng> decodedPath = new ArrayList<>(30);
+//
+//        for (PointBean point : route.getPoints()) {
+//            decodedPath.add(point.getLatLng());
+//        }
+//
+//        drawLinesRoute(decodedPath);
+        drawLinesRoute(route.getDrawPoints());
     }
 
     public void drawLinesRoute(List<LatLng> decodedPath) {

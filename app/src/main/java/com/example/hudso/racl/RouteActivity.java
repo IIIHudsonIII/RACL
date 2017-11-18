@@ -2,6 +2,7 @@ package com.example.hudso.racl;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -13,11 +14,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
+import android.widget.Scroller;
 import android.widget.TextView;
 
+import com.example.hudso.racl.bean.PointBean;
 import com.example.hudso.racl.bean.RouteBean;
+import com.example.hudso.racl.bean.ScheduleBean;
 import com.example.hudso.racl.outro.SingletonTeste;
 import com.example.hudso.racl.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.hudso.racl.outro.Metodos.getInstance;
 
@@ -92,7 +101,7 @@ public class RouteActivity extends AppCompatActivity {
             if (section == 1) {
                 rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
-                TextView textView = (TextView) rootView.findViewById(R.id.tw_detail_route);
+                TextView textView = (TextView) rootView.findViewById(R.id.tw_detail_route_name);
                 carregaCampinhoPorFavor = textView;
                 textView.setText(resultadoParaEuUsar);
 
@@ -154,7 +163,8 @@ public class RouteActivity extends AppCompatActivity {
         @Override
         protected RouteBean doInBackground(Void... params) {
 //            return new Utils().getInfoRoute("https://randomuser.me/api/0.7");
-            return new Utils().getInfoRoute("https://drive.google.com/uc?id=0B-4YWQESpZpsVFA3UkMtU1JJUlE&export=download");
+            //return new Utils().getInfoRoute("https://drive.google.com/uc?id=0B-4YWQESpZpsVFA3UkMtU1JJUlE&export=download");
+            return new Utils().getInfoRoute("http://10.0.2.2:8080/route");
         }
 
         @SuppressLint("RestrictedApi")
@@ -164,10 +174,37 @@ public class RouteActivity extends AppCompatActivity {
 
             Fragment fragment = RouteActivity.this.getSupportFragmentManager().getFragments().get(0);
             if (fragment != null) {
-                TextView textView = fragment.getActivity().findViewById(R.id.tw_detail_route);
+                TextView textView = fragment.getActivity().findViewById(R.id.tw_detail_route_name);
                 if (textView != null) {
-                    textView.setText(route.toString());
+                    textView.setText(route.getName());
                 }
+
+                LinearLayout vScroll = fragment.getActivity().findViewById(R.id.scrollPoints);
+                HorizontalScrollView hScroll;
+
+                for (PointBean point : route.getPoints()) {
+                    hScroll = new HorizontalScrollView(vScroll.getContext());
+
+                    TextView information = new TextView(getBaseContext());
+                    information.setText(" - "+point.getName());
+                    hScroll.addView(information);
+
+                    vScroll.addView(hScroll);
+                }
+
+                vScroll = fragment.getActivity().findViewById(R.id.scrollSchedules);
+
+                for (ScheduleBean schedule : route.getSchedules()) {
+                    hScroll = new HorizontalScrollView(vScroll.getContext());
+
+                    TextView information1 = new TextView(getBaseContext());
+                    information1.setTextSize(14);
+                    information1.setText(" - "+schedule.getFormattedSchedule());
+                    hScroll.addView(information1);
+
+                    vScroll.addView(hScroll);
+                }
+
             }
 
             fragment = RouteActivity.this.getSupportFragmentManager().getFragments().get(1);

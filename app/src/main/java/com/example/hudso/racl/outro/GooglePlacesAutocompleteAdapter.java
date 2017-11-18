@@ -1,8 +1,10 @@
 package com.example.hudso.racl.outro;
 
 import android.content.Context;
+import android.support.annotation.StringDef;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Filter;
 import android.widget.Filterable;
 
@@ -33,8 +35,25 @@ public class GooglePlacesAutocompleteAdapter extends ArrayAdapter implements Fil
 
     private ArrayList<String> resultList;
 
-    public GooglePlacesAutocompleteAdapter(Context context, int textViewResourceId) {
+    public static final String CITY = "(cities)";
+    public static final String ADDRESS = "geocode";
+
+    @StringDef({CITY, ADDRESS})
+    public @interface Types {
+    }
+
+    public String TYPE;
+    private AutoCompleteTextView parentTextView;
+
+    public GooglePlacesAutocompleteAdapter(Context context, int textViewResourceId, @Types String TYPE, AutoCompleteTextView parentTextView) {
         super(context, textViewResourceId);
+        this.TYPE = TYPE;
+        this.parentTextView = parentTextView;
+    }
+
+    public GooglePlacesAutocompleteAdapter(Context context, int textViewResourceId, @Types String TYPE) {
+        super(context, textViewResourceId);
+        this.TYPE = TYPE;
     }
 
     @Override
@@ -55,7 +74,7 @@ public class GooglePlacesAutocompleteAdapter extends ArrayAdapter implements Fil
                 FilterResults filterResults = new FilterResults();
                 if (constraint != null && constraint.length() > 5) {
                     // Retrieve the autocomplete results.
-                    resultList = autocomplete(constraint.toString());
+                    resultList = GooglePlacesAutocompleteAdapter.this.autocomplete(constraint.toString());
 
                     // Assign the data to the FilterResults
                     filterResults.values = resultList;
@@ -82,18 +101,32 @@ public class GooglePlacesAutocompleteAdapter extends ArrayAdapter implements Fil
      * @param input
      * @return
      */
-    public static ArrayList autocomplete(String input) {
+    public ArrayList autocomplete(String input) {
         ArrayList resultList = null;
 
         HttpURLConnection conn = null;
         StringBuilder jsonResults = new StringBuilder();
         try {
+
             StringBuilder sb = new StringBuilder(PLACES_API_BASE + TYPE_AUTOCOMPLETE + OUT_JSON);
             sb.append("?key=" + API_KEY);
             sb.append("&components=country:br");
             sb.append("&language=br");
             //sb.append("&types=(cities)");
-            sb.append("&types=geocode");
+//            sb.append("&types=geocode");
+            sb.append("&types=").append(TYPE);
+            if (parentTextView != null) {
+                String complement = this.parentTextView.getText().toString();
+                int limit = complement.indexOf(",");
+                if (limit > -1) {
+                    complement = complement.substring(0, limit - 1);
+                }
+                limit = complement.indexOf("-");
+                if (limit > -1) {
+                    complement = complement.substring(0, limit - 1);
+                }
+                input = complement + " " + input;
+            }
             sb.append("&input=" + URLEncoder.encode(input, "utf8"));
 
             URL url = new URL(sb.toString());
@@ -107,10 +140,10 @@ public class GooglePlacesAutocompleteAdapter extends ArrayAdapter implements Fil
                 jsonResults.append(buff, 0, read);
             }
         } catch (MalformedURLException e) {
-            Log.e(LOG_TAG, "Error processing Places API URL_DEFAULT", e);
+            Log.e(LOG_TAG, "Hudson - Error processing Places API URL_DEFAULT", e);
             return resultList;
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Error connecting to Places API", e);
+            Log.e(LOG_TAG, "Hudson - Error connecting to Places API", e);
             return resultList;
         } finally {
             if (conn != null) {
@@ -126,16 +159,16 @@ public class GooglePlacesAutocompleteAdapter extends ArrayAdapter implements Fil
             // Extract the Place descriptions from the results
             resultList = new ArrayList(predsJsonArray.length());
             for (int i = 0; i < predsJsonArray.length(); i++) {
-                //System.out.println("Hudson============================================================");
-                //System.out.println("Hudson - JSON - "+String.valueOf(predsJsonArray.getJSONObject(i).toString()));
-
                 System.out.println("Hudson - ============================================================");
-                System.out.println("Hudson - " + predsJsonArray.getJSONObject(i).getString("description"));
-                resultList.add(predsJsonArray.getJSONObject(i).getString("description"));
-
-                //JSONObject city = predsJsonArray.getJSONObject(i).getJSONObject("structured_formatting");
-                //System.out.println("Hudson >>>>> "+city.getString("main_text") + " // "+predsJsonArray.getJSONObject(i).getString("description"));
-                //resultList.add(city.getString("main_text")+", "+city.getString("secondary_text"));
+                if (TYPE == CITY) {
+                    System.out.println("Hudson - " + predsJsonArray.getJSONObject(i).getString("description"));
+                    resultList.add(predsJsonArray.getJSONObject(i).getJSONArray("terms").getJSONObject(0).get("value") + " - " +
+                            predsJsonArray.getJSONObject(i).getJSONArray("terms").getJSONObject(1).get("value"));
+                } else {
+                    JSONObject city = predsJsonArray.getJSONObject(i).getJSONObject("structured_formatting");
+                    System.out.println("Hudson >>>>> "+city.getString("main_text") + " // "+predsJsonArray.getJSONObject(i).getString("description"));
+                    resultList.add(city.getString("main_text")/*+", "+city.getString("secondary_text")*/);
+                }
             }
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Cannot process JSON results", e);

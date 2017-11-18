@@ -73,7 +73,7 @@ public class InternalMapFragment extends Fragment {
         SingletonTeste.getInstance().setMarkerCollector(marker);
  **/
 
-        callAsynchronousTask();
+        //callAsynchronousTask();
     }
 
     @Override

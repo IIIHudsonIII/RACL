@@ -10,26 +10,44 @@
         android:orientation="vertical"
         android:weightSum="1">
 
-        <TextView
-            android:id="@+id/tw_internal_map"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_marginVertical="@android:dimen/dialog_min_width_major"
-            android:paddingBottom="15dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingTop="15dp"
-            android:scrollHorizontally="?attr/isLightTheme"
-            android:text="Testando"
-            android:textAlignment="viewStart"
-            android:textSize="24sp"
-            tools:ignore="HardcodedText" />
+            android:layout_height="85dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Rota:"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/tw_internal_map"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="@android:dimen/dialog_min_width_major"
+                    android:scrollHorizontally="?attr/isLightTheme"
+                    android:textAlignment="viewStart"
+                    android:textSize="28sp"
+                    android:textStyle="bold|italic"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+
+        </RelativeLayout>
 
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
             android:layout_width="match_parent"
-            android:layout_height="500dp" />
+            android:layout_height="match_parent" />
     </LinearLayout>
 
 </FrameLayout>

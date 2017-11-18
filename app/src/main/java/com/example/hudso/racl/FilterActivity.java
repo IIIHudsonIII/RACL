@@ -5,6 +5,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -14,6 +15,7 @@ import com.example.hudso.racl.outro.GooglePlacesAutocompleteAdapter;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +26,9 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
     @BindView(R.id.btnView)
     View btnView;
 
+    AutoCompleteTextView cityAutoComplete;
+    AutoCompleteTextView addressAutoComplete;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,14 +36,27 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
 
         ButterKnife.bind(this);
 
-        AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
-        autoCompleteTextView.setAdapter(new GooglePlacesAutocompleteAdapter(this, android.R.layout.simple_dropdown_item_1line));
-        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        cityAutoComplete = (AutoCompleteTextView) findViewById(R.id.autoCompleteCityTextView);
+        cityAutoComplete.setAdapter(new GooglePlacesAutocompleteAdapter(this, android.R.layout.simple_dropdown_item_1line, GooglePlacesAutocompleteAdapter.CITY));
+        cityAutoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String address = (String) parent.getItemAtPosition(position);
                 LatLng latLng = getLocationFromAddress(address);
                 String desc = " (" + latLng.latitude + "/" + latLng.longitude + ")";
+                Toast.makeText(FilterActivity.this, address + desc, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        addressAutoComplete = (AutoCompleteTextView) findViewById(R.id.autoCompleteAddressTextView);
+        addressAutoComplete.setAdapter(new GooglePlacesAutocompleteAdapter(this, android.R.layout.simple_dropdown_item_1line, GooglePlacesAutocompleteAdapter.ADDRESS, cityAutoComplete));
+        addressAutoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String address = (String) parent.getItemAtPosition(position);
+                LatLng latLng = getLocationFromAddress(address);
+                String desc = " (" + latLng.latitude + "/" + latLng.longitude + ")";
+                System.out.println("Hudson ___ "+desc);
                 Toast.makeText(FilterActivity.this, address + desc, Toast.LENGTH_SHORT).show();
             }
         });
@@ -53,7 +71,7 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
 
     public LatLng getLocationFromAddress(String strAddress){
         try {
-            Geocoder coder = new Geocoder(this);
+            Geocoder coder = new Geocoder(this, Locale.getDefault());
             List<Address> address = coder.getFromLocationName(strAddress, 1);
             if (address != null && address.size() > 0) {
                 Address location;

@@ -21,20 +21,27 @@
         <ImageView
             android:id="@+id/img_garbage"
             android:layout_width="338dp"
-            android:layout_height="291dp"
-            android:layout_weight="0.01"
+            android:layout_height="263dp"
+            android:layout_marginVertical="10dp"
+            android:layout_weight="0"
             android:adjustViewBounds="false"
-            app:srcCompat="@mipmap/ic_launcher" />
+            android:fadingEdgeLength="0dp"
+            android:paddingLeft="25dp"
+            android:paddingTop="30dp"
+            app:srcCompat="@drawable/icon_garbage" />
 
         <TextView
             android:id="@+id/tw_description_app"
             android:layout_width="match_parent"
-            android:layout_height="129dp"
-            android:layout_weight="0.27"
+            android:layout_height="140dp"
+            android:layout_above="@+id/tw_btn_search"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_weight="0"
             android:fontFamily="sans-serif-condensed"
             android:text="@string/caption_app_racl"
             android:textAlignment="center"
-            android:textSize="32sp" />
+            android:textSize="30sp" />
 
         <RelativeLayout
             android:id="@+id/btnSearch"

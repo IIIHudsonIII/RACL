@@ -8,11 +8,78 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.hudso.racl.RouteActivity$PlaceholderFragment">
 
-    <TextView
-        android:id="@+id/tw_detail_route"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/caption_app_racl"
-        android:textSize="18sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tw_detail_route_name"
+        android:orientation="vertical"
+        tools:ignore="NotSibling">
+
+        <TextView
+            android:id="@+id/tw_detail_route"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:paddingTop="7dp"
+            android:text="Rota:"
+            android:textSize="26sp" />
+
+        <TextView
+            android:id="@+id/tw_detail_route_name"
+            android:layout_width="match_parent"
+            android:layout_height="82dp"
+            android:autoText="true"
+            android:elegantTextHeight="false"
+            android:freezesText="false"
+            android:isScrollContainer="false"
+            android:overScrollMode="ifContentScrolls"
+            android:singleLine="true"
+            android:textSize="32sp"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/tw_detail_points"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:paddingTop="7dp"
+            android:text="Pontos de referência:"
+            android:textSize="26sp" />
+
+        <ScrollView
+            android:id="@+id/scrollViewPoints"
+            android:layout_width="match_parent"
+            android:layout_height="245dp">
+
+            <LinearLayout
+                android:id="@+id/scrollPoints"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+            </LinearLayout>
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/tw_detail_schedules"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:paddingTop="7dp"
+            android:text="Agendamentos de coleta:"
+            android:textSize="26sp" />
+
+        <ScrollView
+            android:id="@+id/scrollViewSchedules"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/scrollSchedules"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </ScrollView>
+
+    </LinearLayout>
 
 </RelativeLayout>

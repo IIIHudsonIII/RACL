@@ -64,52 +64,6 @@ public class NetworkUtils {
             //connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             connection.connect();
 
-/*
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setDoOutput(true);
-        conn.setRequestMethod("POST");
-        conn.setRequestProperty("Content-Type", "application/json");
-
-        String input = "{ \"snippet\": {\"playlistId\": \"WL\",\"resourceId\": {\"videoId\": \""+videoId+"\",\"kind\": \"youtube#video\"},\"position\": 0}}";
-
-        OutputStream os = conn.getOutputStream();
-        os.write(input.getBytes());
-        os.flush();
-
-        if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-            throw new RuntimeException("Failed : HTTP error code : "
-                + conn.getResponseCode());
-        }
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(
-                (conn.getInputStream())));
-
-        String output;
-        System.out.println("Output from Server .... \n");
-        while ((output = br.readLine()) != null) {
-            System.out.println(output);
-        }
-* */
-/*
-        String urlParameters  = "param1=a&param2=b&param3=c";
-        byte[] postData       = urlParameters.getBytes( StandardCharsets.UTF_8 );
-        int    postDataLength = postData.length;
-        String request        = "http://example.com/index.php";
-        URL    url            = new URL( request );
-        HttpURLConnection conn= (HttpURLConnection) url.openConnection();
-        conn.setDoOutput( true );
-        conn.setInstanceFollowRedirects( false );
-        conn.setRequestMethod( "POST" );
-        conn.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");
-        conn.setRequestProperty( "charset", "utf-8");
-        conn.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
-        conn.setUseCaches( false );
-        try(
-            DataOutputStream wr = new DataOutputStream( conn.getOutputStream())) {
-            wr.write( postData );
-        }
- */
-
             if (connection.getResponseCode() < HttpURLConnection.HTTP_BAD_REQUEST) {
                 is = connection.getInputStream();
             } else {
@@ -161,4 +115,50 @@ public class NetworkUtils {
 
         return buffer.toString();
     }
+
+/*
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setDoOutput(true);
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-Type", "application/json");
+
+        String input = "{ \"snippet\": {\"playlistId\": \"WL\",\"resourceId\": {\"videoId\": \""+videoId+"\",\"kind\": \"youtube#video\"},\"position\": 0}}";
+
+        OutputStream os = conn.getOutputStream();
+        os.write(input.getBytes());
+        os.flush();
+
+        if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
+            throw new RuntimeException("Failed : HTTP error code : "
+                + conn.getResponseCode());
+        }
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(
+                (conn.getInputStream())));
+
+        String output;
+        System.out.println("Output from Server .... \n");
+        while ((output = br.readLine()) != null) {
+            System.out.println(output);
+        }
+* */
+/*
+        String urlParameters  = "param1=a&param2=b&param3=c";
+        byte[] postData       = urlParameters.getBytes( StandardCharsets.UTF_8 );
+        int    postDataLength = postData.length;
+        String request        = "http://example.com/index.php";
+        URL    url            = new URL( request );
+        HttpURLConnection conn= (HttpURLConnection) url.openConnection();
+        conn.setDoOutput( true );
+        conn.setInstanceFollowRedirects( false );
+        conn.setRequestMethod( "POST" );
+        conn.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");
+        conn.setRequestProperty( "charset", "utf-8");
+        conn.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
+        conn.setUseCaches( false );
+        try(
+            DataOutputStream wr = new DataOutputStream( conn.getOutputStream())) {
+            wr.write( postData );
+        }
+ */
 }

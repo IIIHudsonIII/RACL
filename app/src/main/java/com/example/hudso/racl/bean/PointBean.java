@@ -2,55 +2,52 @@ package com.example.hudso.racl.bean;
 
 import com.google.android.gms.maps.model.LatLng;
 
-/**
- * Created by hudso on 16/10/2017.
- */
-
 public class PointBean {
-    private double lat;
-    private double lng;
-    private String description;
+    private String id;
+    private String name;
+    private double latitude;
+    private double longitude;
 
-    public PointBean(double lat, double lng) {
-        this.lat = lat;
-        this.lng = lng;
-        this.description = "";
+    public PointBean(String id, String name, double latitude, double longitude) {
+        this.id = id;
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
-    public PointBean(double lat, double lng, String description) {
-        this.lat = lat;
-        this.lng = lng;
-        this.description = description;
+    public String getId() {
+        return id;
     }
 
-    public double getLat() {
-        return lat;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setLat(double lat) {
-        this.lat = lat;
+    public String getName() {
+        return name;
     }
 
-    public double getLng() {
-        return lng;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setLng(double lng) {
-        this.lng = lng;
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public LatLng getLatLng() {
-        return new LatLng(getLat(), getLng());
-    }
-
-    public String getDescription() {
-        if (description == null) {
-
-        }
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+        return new LatLng(getLatitude(), getLongitude());
     }
 }

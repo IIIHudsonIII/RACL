@@ -11,7 +11,7 @@
 
 https://maps.googleapis.com/maps/api/place/ne‌​arbysearch/json?
 
-
+https://maps.googleapis.com/maps/api/directions
 
 * geocode instrui o serviço Places a retornar apenas resultados de geocodificação em vez de resultados de empresas.
 * address instrui o serviço Places a retornar apenas resultados de geocodificação com um endereço preciso.
