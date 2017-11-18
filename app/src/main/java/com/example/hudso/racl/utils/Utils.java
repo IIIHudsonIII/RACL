@@ -78,7 +78,7 @@ public class Utils {
 
                 List<List<PointBean>> parts = chopped(routeBean.getPoints(), 6);
                 for (List<PointBean> part: parts) {
-                    routeBean.getDrawPoints().addAll(getDrawPoints(routeBean.getPoints()));
+                    routeBean.getDrawPoints().addAll(getDrawPoints(part));
                 }
             }
 

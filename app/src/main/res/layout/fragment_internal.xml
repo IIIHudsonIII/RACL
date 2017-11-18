@@ -1,53 +1,52 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="10dp">
     <!--tools:context="com.example.hudso.racl.FilterActivity">-->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="1">
+    <ScrollView
+        android:layout_width="372dp"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="85dp"
-            android:paddingBottom="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tw_internal_map"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="36dp"
+                android:layout_margin="1dp"
+                android:text="@string/rota_label"
+                android:textSize="25sp"
+                tools:layout_editor_absoluteX="0dp" />
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Rota:"
-                    android:textSize="22sp" />
+            <TextView
+                android:id="@+id/tw_internal_map_name"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="1dp"
+                android:overScrollMode="ifContentScrolls"
+                android:singleLine="true"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/tw_internal_map"
+                tools:layout_editor_absoluteX="0dp" />
 
-                <TextView
-                    android:id="@+id/tw_internal_map"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginVertical="@android:dimen/dialog_min_width_major"
-                    android:scrollHorizontally="?attr/isLightTheme"
-                    android:textAlignment="viewStart"
-                    android:textSize="28sp"
-                    android:textStyle="bold|italic"
-                    tools:ignore="HardcodedText" />
-            </LinearLayout>
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/mapView"
+                android:layout_width="match_parent"
+                android:layout_height="480dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent" />
 
-        </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
 
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/mapView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
-
-</FrameLayout>
+</android.support.constraint.ConstraintLayout>

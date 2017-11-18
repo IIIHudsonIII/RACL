@@ -100,25 +100,25 @@ public class InternalMapFragment extends Fragment {
         mMapView.onLowMemory();
     }
 
-    public void callAsynchronousTask() {
-        final Handler handler = new Handler();
-        Timer timer = new Timer();
-        TimerTask doAsynchronousTask = new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(new Runnable() {
-                    public void run() {
-                        try {
-                            PerformBackgroundTask performBackgroundTask = new PerformBackgroundTask();
-                            // PerformBackgroundTask this class is the class that extends AsynchTask
-                            performBackgroundTask.execute();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            }
-        };
-        timer.schedule(doAsynchronousTask, 0, 2000); //execute in every 3000 ms
-    }
+//    public void callAsynchronousTask() {
+//        final Handler handler = new Handler();
+//        Timer timer = new Timer();
+//        TimerTask doAsynchronousTask = new TimerTask() {
+//            @Override
+//            public void run() {
+//                handler.post(new Runnable() {
+//                    public void run() {
+//                        try {
+//                            PerformBackgroundTask performBackgroundTask = new PerformBackgroundTask();
+//                            // PerformBackgroundTask this class is the class that extends AsynchTask
+//                            performBackgroundTask.execute();
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
+//            }
+//        };
+//        timer.schedule(doAsynchronousTask, 0, 2000); //execute in every 3000 ms
+//    }
 }

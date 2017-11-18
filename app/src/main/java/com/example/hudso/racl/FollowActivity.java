@@ -79,9 +79,8 @@ public class FollowActivity extends AppCompatActivity {
                     public void run() {
                         try {
                             String id = Settings.Secure.getString(getBaseContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-                            System.out.println("Hudson - ID do dispositivo: "+id);
                             Location newLocation = new Location(LocationManager.PASSIVE_PROVIDER);
-                            System.out.println("Hudson - Posição do dispositivo: "+newLocation.getLatitude()+" / "+newLocation.getLongitude());
+                            System.out.println("Hudson - Posição do dispositivo "+id+": "+newLocation.getLatitude()+" / "+newLocation.getLongitude());
 
                             //LocationListener locationListener = new MyLocationListener();
                             //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
@@ -106,7 +105,7 @@ public class FollowActivity extends AppCompatActivity {
         @SuppressLint("RestrictedApi")
         @Override
         protected void onPostExecute(String device) {
-            System.out.println("Hudson > OI > "+device);
+            System.out.println("Hudson.FazOPost = device: "+device);
         }
     }
 

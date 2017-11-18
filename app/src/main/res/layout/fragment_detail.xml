@@ -22,28 +22,26 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:paddingTop="7dp"
-            android:text="Rota:"
+            android:text="@string/rota_label"
             android:textSize="26sp" />
 
         <TextView
             android:id="@+id/tw_detail_route_name"
             android:layout_width="match_parent"
             android:layout_height="82dp"
-            android:autoText="true"
-            android:elegantTextHeight="false"
             android:freezesText="false"
             android:isScrollContainer="false"
             android:overScrollMode="ifContentScrolls"
             android:singleLine="true"
             android:textSize="32sp"
-            android:textStyle="bold|italic" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tw_detail_points"
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:paddingTop="7dp"
-            android:text="Pontos de referência:"
+            android:text="@string/pontos_de_referencia_label"
             android:textSize="26sp" />
 
         <ScrollView
@@ -65,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:paddingTop="7dp"
-            android:text="Agendamentos de coleta:"
+            android:text="@string/agendamentos_de_coleta_label"
             android:textSize="26sp" />
 
         <ScrollView

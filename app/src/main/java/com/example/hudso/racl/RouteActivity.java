@@ -198,7 +198,7 @@ public class RouteActivity extends AppCompatActivity {
                     hScroll = new HorizontalScrollView(vScroll.getContext());
 
                     TextView information1 = new TextView(getBaseContext());
-                    information1.setTextSize(14);
+                    //information1.setTextSize(18);
                     information1.setText(" - "+schedule.getFormattedSchedule());
                     hScroll.addView(information1);
 
@@ -211,9 +211,9 @@ public class RouteActivity extends AppCompatActivity {
             if (fragment != null) {
                 getInstance().drawDynamicRoute(route);
 
-                TextView textView = fragment.getActivity().findViewById(R.id.tw_internal_map);
+                TextView textView = fragment.getActivity().findViewById(R.id.tw_internal_map_name);
                 if (textView != null) {
-                    textView.setText("Rota: " + route.getName());
+                    textView.setText(route.getName());
                 }
             }
             load.dismiss();
