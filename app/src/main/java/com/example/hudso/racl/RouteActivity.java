@@ -2,7 +2,6 @@ package com.example.hudso.racl;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -16,17 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.Scroller;
 import android.widget.TextView;
 
 import com.example.hudso.racl.bean.PointBean;
 import com.example.hudso.racl.bean.RouteBean;
 import com.example.hudso.racl.bean.ScheduleBean;
-import com.example.hudso.racl.outro.SingletonTeste;
+import com.example.hudso.racl.singleton.SingletonMaps;
 import com.example.hudso.racl.utils.Utils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.example.hudso.racl.outro.Metodos.getInstance;
 
@@ -170,7 +165,7 @@ public class RouteActivity extends AppCompatActivity {
         @SuppressLint("RestrictedApi")
         @Override
         protected void onPostExecute(RouteBean route) {
-            SingletonTeste.getInstance().setRoute(route);
+            SingletonMaps.getInstance().setRoute(route);
 
             Fragment fragment = RouteActivity.this.getSupportFragmentManager().getFragments().get(0);
             if (fragment != null) {

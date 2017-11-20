@@ -25,18 +25,17 @@
             android:layout_marginVertical="10dp"
             android:layout_weight="0"
             android:adjustViewBounds="false"
+            android:contentDescription="@string/caption_app_racl"
             android:fadingEdgeLength="0dp"
             android:paddingLeft="25dp"
+            android:paddingRight="5dp"
             android:paddingTop="30dp"
-            app:srcCompat="@drawable/icon_garbage" />
+            app:srcCompat="@drawable/icon_garbage" android:paddingStart="25dp" android:paddingEnd="5dp" tools:targetApi="o" />
 
         <TextView
             android:id="@+id/tw_description_app"
             android:layout_width="match_parent"
             android:layout_height="140dp"
-            android:layout_above="@+id/tw_btn_search"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_weight="0"
             android:fontFamily="sans-serif-condensed"
             android:text="@string/caption_app_racl"
@@ -44,7 +43,7 @@
             android:textSize="30sp" />
 
         <RelativeLayout
-            android:id="@+id/btnSearch"
+            android:id="@+id/main_btn_search"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_weight="0.30">
@@ -58,6 +57,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="81dp"
                 android:layout_marginStart="81dp"
+                android:contentDescription="@string/btn_search_description"
                 app:srcCompat="@android:drawable/ic_menu_agenda"
                 tools:layout_editor_absoluteX="90dp"
                 tools:layout_editor_absoluteY="0dp" />
@@ -69,8 +69,8 @@
                 android:layout_alignLeft="@+id/imageView7"
                 android:layout_alignStart="@+id/imageView7"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="47dp"
-                android:layout_marginStart="47dp"
+                android:layout_marginLeft="46dp"
+                android:layout_marginStart="46dp"
                 android:fontFamily="sans-serif-condensed"
                 android:text="@string/btn_search_description"
                 android:textAlignment="center"
@@ -83,7 +83,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/btnFollow"
+            android:id="@+id/main_btn_follow"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_weight="0.09">
@@ -92,14 +92,15 @@
                 android:id="@+id/imageView8"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                app:srcCompat="@android:drawable/ic_menu_myplaces"
-                tools:layout_editor_absoluteX="90dp"
-                tools:layout_editor_absoluteY="0dp"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
                 android:layout_marginLeft="80dp"
-                android:layout_marginStart="80dp" />
+                android:layout_marginStart="80dp"
+                android:contentDescription="@string/btn_follow_description"
+                app:srcCompat="@android:drawable/ic_menu_myplaces"
+                tools:layout_editor_absoluteX="90dp"
+                tools:layout_editor_absoluteY="0dp" />
 
             <TextView
                 android:id="@+id/tw_btn_follow"
@@ -110,8 +111,6 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="85dp"
                 android:layout_marginRight="85dp"
-                android:layout_weight="1"
-                android:autoText="false"
                 android:fontFamily="sans-serif-condensed"
                 android:text="@string/btn_follow_description"
                 android:textAlignment="center"

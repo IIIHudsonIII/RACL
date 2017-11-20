@@ -23,7 +23,7 @@ import java.util.Date;
  * Created by hudso on 28/10/2017.
  */
 
-public class TentandoEnviarLocalizacao extends AppCompatActivity implements LocationListener,
+public class TesteTentandoEnviarLocalizacao extends AppCompatActivity implements LocationListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 

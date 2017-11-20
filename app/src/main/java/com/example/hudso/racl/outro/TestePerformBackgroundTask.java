@@ -2,15 +2,12 @@ package com.example.hudso.racl.outro;
 
 import android.os.AsyncTask;
 
+import com.example.hudso.racl.singleton.SingletonMaps;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
-/**
- * Created by hudso on 03/11/2017.
- */
-
-public class PerformBackgroundTask extends AsyncTask<Void, Void, LatLng> {
+public class TestePerformBackgroundTask extends AsyncTask<Void, Void, LatLng> {
     private static int i = 0;
     @Override
     protected LatLng doInBackground(Void... params) {
@@ -23,11 +20,11 @@ public class PerformBackgroundTask extends AsyncTask<Void, Void, LatLng> {
 
     @Override
     protected void onPostExecute(LatLng latLng) {
-        if (SingletonTeste.getInstance().getMarkerCollector() != null) {
-            SingletonTeste.getInstance().getMarkerCollector().remove();
+        if (SingletonMaps.getInstance().getMarkerCollector() != null) {
+            SingletonMaps.getInstance().getMarkerCollector().remove();
         }
         if (latLng != null) {
-            SingletonTeste.getInstance().setMarkerCollector(
+            SingletonMaps.getInstance().setMarkerCollector(
                     Metodos.getInstance().addMarkerToMap(
                             Metodos.getInstance().createCustomMarkerOptions(latLng, null, 0), true));
         }

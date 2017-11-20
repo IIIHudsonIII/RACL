@@ -10,66 +10,50 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.annotation.StringDef;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import com.example.hudso.racl.bean.DeviceBean;
 import com.example.hudso.racl.outro.DeviceServices;
-import com.example.hudso.racl.outro.PerformBackgroundTask;
+import com.example.hudso.racl.singleton.SingletonDevice;
 
 import org.json.JSONObject;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 import static android.view.View.VISIBLE;
 
 public class FollowActivity extends AppCompatActivity {
+
+    private ImageView follow_img_follow;
+    private ProgressBar follow_pb_loading;
+    private TextView follow_tv_message;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow);
 
-        ((TextView) findViewById(R.id.lbFollow)).setText("Autenticando dispositivo.\nAguarde...");
+        initialize();
 
-        GetJson validateDevice = new GetJson();
-        validateDevice.execute();
+        new DeviceService().execute(ActionEnum.FIND, SingletonDevice.getInstance().getDeviceBean());
     }
 
-    /** AJUSTAR AQUI HUDSON, agora está funcionando pelo clique no ProgressBar */
-    public void ativar() {
-        View view = findViewById(R.id.progressPB);
-        // Ocultar a ProgressBar
-        view.setVisibility(View.INVISIBLE);
-        ((ImageView) findViewById(R.id.imgFollow)).setImageResource(R.drawable.img_follow_ok);
-        ((ImageView) findViewById(R.id.imgFollow)).setVisibility(VISIBLE);
-
-        // Adicionado GIF img_follow_active ao ativar o rastreio.
-//        ((ImageView) findViewById(R.id.imgFollow)).setVisibility(VISIBLE);
-//        Glide.with(FollowActivity.this)
-//                .load(R.drawable.img_follow_ok)
-//                .asGif()
-//                .into((ImageView) findViewById(R.id.imgFollow));
-
-        // Modificar a mensagem
-        ((TextView) findViewById(R.id.lbFollow)).setText("Rastreio ativado com sucesso!");
-
-        String id = Settings.Secure.getString(getBaseContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-        System.out.println("Hudson - ID do dispositivo: "+id);
-
-        //callAsynchronousTask();
-        FazOPost post = new FazOPost();
-        post.execute();
+    protected void initialize() {
+        follow_img_follow = ((ImageView) findViewById(R.id.follow_img_follow));
+        follow_pb_loading = (ProgressBar) findViewById(R.id.follow_pb_loading);
+        follow_tv_message = (TextView) findViewById(R.id.follow_tv_message);
     }
-
-    public void callAsynchronousTask() {
+/*
+    // TODO Hudson
+    // Criar thread para realizar update da posição do dispositivo
+    private void createTimerPosition() {
         final Handler handler = new Handler();
         Timer timer = new Timer();
         TimerTask doAsynchronousTask = new TimerTask() {
@@ -80,10 +64,10 @@ public class FollowActivity extends AppCompatActivity {
                         try {
                             String id = Settings.Secure.getString(getBaseContext().getContentResolver(), Settings.Secure.ANDROID_ID);
                             Location newLocation = new Location(LocationManager.PASSIVE_PROVIDER);
-                            System.out.println("Hudson - Posição do dispositivo "+id+": "+newLocation.getLatitude()+" / "+newLocation.getLongitude());
+                            System.out.println("Hudson - Posição do dispositivo " + id + ": " + newLocation.getLatitude() + " / " + newLocation.getLongitude());
 
-                            //LocationListener locationListener = new MyLocationListener();
-                            //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+                            // TODO Hudson
+                            new DeviceService().execute();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -92,90 +76,109 @@ public class FollowActivity extends AppCompatActivity {
             }
         };
         timer.schedule(doAsynchronousTask, 0, 2000); //execute in every 3000 ms
-        //timer.cancel();
     }
-
-    public static final class FazOPost extends AsyncTask<Void, Void, String> {
-
-        @Override
-        protected String doInBackground(Void... params) {
-            return new DeviceServices().POST("");
-        }
-
-        @SuppressLint("RestrictedApi")
-        @Override
-        protected void onPostExecute(String device) {
-            System.out.println("Hudson.FazOPost = device: "+device);
-        }
-    }
-
-    private final class GetJson extends AsyncTask<Void, Void, JSONObject> {
-
-        @Override
-        protected JSONObject doInBackground(Void... params) {
-            String id = Settings.Secure.getString(getBaseContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-            return new DeviceServices().findById(id);
-        }
-
-        @SuppressLint("RestrictedApi")
-        @Override
-        protected void onPostExecute(JSONObject device) {
-
-            System.out.println("Hudson - Retorno do dispositivo:\n" + device);
-            if (device != null) {
-                ativar();
-            } else {
-                View view = findViewById(R.id.progressPB);
-                // Ocultar a ProgressBar
-                view.setVisibility(View.INVISIBLE);
-
-                // Adicionado GIF img_follow_active ao ativar o rastreio.
-                //((ImageView) findViewById(R.id.imgFollow)).setVisibility(View.VISIBLE);
-                ((ImageView) findViewById(R.id.imgFollow)).setImageResource(R.drawable.img_follow_failed);
-                ((ImageView) findViewById(R.id.imgFollow)).setVisibility(VISIBLE);
-                /*Glide.with(FollowActivity.this)
-                        .load(R.drawable.img_follow_failed)
-                        //.asGif()
-                        .into((ImageView) findViewById(R.id.imgFollow));
 */
-                ((TextView) findViewById(R.id.lbFollow)).setText("Não foi possível ativar o rastreio do dispositivo.");
+
+    enum ActionEnum {
+        FIND, UPDATE
+    }
+
+    // TODO Hudson
+    // Realizar update da nova localização do dispositivo
+    public final class DeviceService extends AsyncTask<Pair<ActionEnum, DeviceBean>, Void, DeviceBean> {
+
+        protected void execute(@NonNull ActionEnum action, DeviceBean deviceBean) {
+            if (deviceBean != null) {
+                System.out.println("Hudson - ID do dispositivo: " + deviceBean.getId());
+                super.execute(new Pair<>(action, deviceBean));
+            } else {
+                desactiveFollow();
+            }
+        }
+
+        @Override
+        protected DeviceBean doInBackground(Pair<ActionEnum, DeviceBean>... params) {
+            DeviceServices ds = new DeviceServices();
+            switch (params[0].first) {
+                case FIND:
+                    return ds.findById(params[0].second);
+                case UPDATE:
+                    return ds.update(params[0].second);
+                default:
+            }
+            return null;
+        }
+
+        @SuppressLint("RestrictedApi")
+        @Override
+        protected void onPostExecute(DeviceBean deviceBean) {
+            System.out.println("Hudson.DeviceService - Dispositivo autenticado: " + deviceBean);
+            SingletonDevice.getInstance().setDeviceBean(deviceBean);
+
+            if (deviceBean != null) {
+                if (runGPSPosition()) {
+                    activateFollow();
+                }
+            } else {
+                desactiveFollow();
             }
         }
     }
 
-    // Aqui consegue a localização do dispositivo via GPS
-    private LocationManager locationManager;
-    private LocationListener listener;
+    protected void activateFollow() {
+        follow_pb_loading.setVisibility(View.INVISIBLE);
 
-    protected void setandoOPegadorDePosicao() {
+        follow_img_follow.setImageResource(R.drawable.img_ok);
+        follow_img_follow.setVisibility(VISIBLE);
 
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        follow_tv_message.setText(FollowActivity.this.getResources().getText(R.string.rastreio_ativado_msg));
+    }
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
+    protected final void desactiveFollow() {
+        follow_pb_loading.setVisibility(View.INVISIBLE);
+
+        follow_img_follow.setImageResource(R.drawable.img_follow_failed);
+        follow_img_follow.setVisibility(VISIBLE);
+
+        follow_tv_message.setText(FollowActivity.this.getResources().getText(R.string.rastreio_nao_ativado_msg));
+    }
+
+    // TODO Hudson
+    // Cria thread para receber cada nova localização do GPS
+    protected boolean runGPSPosition() {
+
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        if (ActivityCompat.checkSelfPermission(FollowActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(FollowActivity.this,
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
                                 Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.INTERNET}
                         , 10);
             }
-            return;
+            return false;
         }
 
-        listener = new LocationListener() {
+        locationManager.requestLocationUpdates("gps", 5000, 0, new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                System.out.println("Hudson >>> Localização do dispositivo: "+location.getLongitude() + " / " + location.getLatitude());
+                System.out.println("Hudson >>> NewPosition: " + location.getLongitude() + " / " + location.getLatitude());
+
+                DeviceBean deviceBean = SingletonDevice.getInstance().getDeviceBean();
+                deviceBean.setLast_latitude(location.getLatitude());
+                deviceBean.setLast_longitude(location.getLongitude());
+                SingletonDevice.getInstance().setDeviceBean(deviceBean);
+
+                //new DeviceService().execute(ActionEnum.FIND, deviceBean);
             }
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
-
             }
 
             @Override
             public void onProviderEnabled(String provider) {
-
             }
 
             @Override
@@ -183,8 +186,21 @@ public class FollowActivity extends AppCompatActivity {
                 Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 startActivity(i);
             }
-        };
+        });
+        return true;
+    }
 
-        locationManager.requestLocationUpdates("gps", 5000, 0, listener);
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        for (int grant : grantResults) {
+            if (grant == -1) {
+                desactiveFollow();
+                return;
+            }
+        }
+        if (runGPSPosition()) {
+            activateFollow();
+        }
     }
 }

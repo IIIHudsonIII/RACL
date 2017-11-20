@@ -1,21 +1,16 @@
 package com.example.hudso.racl;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.hudso.racl.outro.PerformBackgroundTask;
-import com.example.hudso.racl.outro.SingletonTeste;
+import com.example.hudso.racl.singleton.SingletonMaps;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class InternalMapFragment extends Fragment {
 
@@ -61,7 +56,7 @@ public class InternalMapFragment extends Fragment {
      */
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-        SingletonTeste.getInstance().setMap(googleMap);
+        SingletonMaps.getInstance().setMap(googleMap);
 
 /**
         MarkerOptions collectorMarker = Metodos.getInstance().createCustomMarkerOptions(
@@ -70,10 +65,10 @@ public class InternalMapFragment extends Fragment {
 
         System.out.println("Hudson - ADICIONOU COLLECTOR NO MAPA");
 
-        SingletonTeste.getInstance().setMarkerCollector(marker);
+        SingletonMaps.getInstance().setMarkerCollector(marker);
  **/
 
-        //callAsynchronousTask();
+        //createTimerPosition();
     }
 
     @Override
@@ -100,7 +95,7 @@ public class InternalMapFragment extends Fragment {
         mMapView.onLowMemory();
     }
 
-//    public void callAsynchronousTask() {
+//    public void createTimerPosition() {
 //        final Handler handler = new Handler();
 //        Timer timer = new Timer();
 //        TimerTask doAsynchronousTask = new TimerTask() {
@@ -109,8 +104,8 @@ public class InternalMapFragment extends Fragment {
 //                handler.post(new Runnable() {
 //                    public void run() {
 //                        try {
-//                            PerformBackgroundTask performBackgroundTask = new PerformBackgroundTask();
-//                            // PerformBackgroundTask this class is the class that extends AsynchTask
+//                            TestePerformBackgroundTask performBackgroundTask = new TestePerformBackgroundTask();
+//                            // TestePerformBackgroundTask this class is the class that extends AsynchTask
 //                            performBackgroundTask.execute();
 //                        } catch (Exception e) {
 //                            e.printStackTrace();

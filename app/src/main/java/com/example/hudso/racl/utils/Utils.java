@@ -77,7 +77,7 @@ public class Utils {
                 }
 
                 List<List<PointBean>> parts = chopped(routeBean.getPoints(), 6);
-                for (List<PointBean> part: parts) {
+                for (List<PointBean> part : parts) {
                     routeBean.getDrawPoints().addAll(getDrawPoints(part));
                 }
             }
@@ -133,55 +133,52 @@ public class Utils {
         // Traversing through all the routes
         //for (int i = 0; i < routes.size(); i++) {
 
-            // Fetching i-th route
-            List<HashMap<String, String>> path = routes.get(i);
+        // Fetching i-th route
+        List<HashMap<String, String>> path = routes.get(i);
 
-            // Fetching all the points in i-th route
-            for (int j = 0; j < path.size(); j++) {
-                HashMap<String, String> point = path.get(j);
+        // Fetching all the points in i-th route
+        for (int j = 0; j < path.size(); j++) {
+            HashMap<String, String> point = path.get(j);
 
-                double lat = Double.parseDouble(point.get("lat"));
-                double lng = Double.parseDouble(point.get("lng"));
-                LatLng position = new LatLng(lat, lng);
+            double lat = Double.parseDouble(point.get("lat"));
+            double lng = Double.parseDouble(point.get("lng"));
+            LatLng position = new LatLng(lat, lng);
 
-                points.add(position);
-            }
+            points.add(position);
+        }
         //}
         return points;
     }
 
     // Utilizar a api do google mesmo com os pontos cadastrados pelo usuário https://maps.googleapis.com/maps/api/directions
 
-    private String getUrlGoogleDirectionsAPI(/*LatLng origin, LatLng dest, */List<PointBean> points) {
-        // Output format
+    private String getUrlGoogleDirectionsAPI(List<PointBean> points) {
+        // Tipo de retorno esperado (XML ou JSON)
         String output = "json";
 
+        // Ponto de partida da rota
         LatLng origin = points.get(0).getLatLng();
-        LatLng dest = points.get(points.size()-1).getLatLng();
-
-        StringBuffer waypoints = new StringBuffer("waypoints=");
-        for (int i = 1; 0 < i && i < points.size()-1; i++) {
-            PointBean point = points.get(i);
-            waypoints.append(point.getLatitude()).append(",").append(point.getLongitude()).append("|");
-        }
-//        for (PointBean point : points) {
-//            waypoints.append(point.getLatitude()).append(",").append(point.getLongitude()).append("|");
-//        }
-
-        // Origin of route
         String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
 
-        // Destination of route
+        // Ponto de destino da rota
+        LatLng dest = points.get(points.size() - 1).getLatLng();
         String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
 
-        // Sensor enabled
-        //String sensor = "sensor=false";
+        // Pontos da rota entre a partida e o destino
+        StringBuffer waypoints = new StringBuffer("waypoints=");
+        for (int i = 1; 0 < i && i < points.size() - 1; i++) {
+            PointBean point = points.get(i);
+            waypoints.append(point.getLatitude()).append(",");
+            waypoints.append(point.getLongitude()).append("|");
+        }
 
-        // Building the parameters to the web service
-        String parameters = str_origin + "&" + str_dest + "&" + waypoints.substring(0,waypoints.length()-1);//"&" + sensor;
+        // Concatenação dos parâmetros
+        String parameters = str_origin + "&" + str_dest + "&" + waypoints.substring(0, waypoints.length() - 1);
 
-        // Building the url to the web service
+        // Construção do endereço web do serviço com parâmetros
         String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
+        return url;
+    }
 /*
         https://maps.googleapis.com/maps/api/directions/json?origin=-26.8886192,-49.09570150000002&destination=-26.8889187,-49.09678050000002
         {
@@ -197,8 +194,6 @@ public class Utils {
                 "longitude": -49.09678050000002
         },
 */
-        return url;
-    }
 
     class Old {
 
@@ -338,5 +333,30 @@ public class Utils {
             }
             return data;
         }
+    }
+
+    /**
+     * Returns <b><code>InputStream</code></b> value as <b><code>String</code></b>.
+     *
+     * @param is
+     * @return
+     */
+    public static final String parseInputStreamToString(InputStream is) {
+        StringBuffer buffer = new StringBuffer();
+        try {
+            BufferedReader bufferedReader;
+            String line;
+
+            bufferedReader = new BufferedReader(new InputStreamReader(is));
+            while ((line = bufferedReader.readLine()) != null) {
+                buffer.append(line);
+            }
+
+            bufferedReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return buffer.toString();
     }
 }

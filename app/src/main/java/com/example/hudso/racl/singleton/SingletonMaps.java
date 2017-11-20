@@ -1,23 +1,19 @@
-package com.example.hudso.racl.outro;
+package com.example.hudso.racl.singleton;
 
 import com.example.hudso.racl.bean.RouteBean;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
-/**
- * Created by hudso on 16/10/2017.
- */
+public class SingletonMaps {
 
-public class SingletonTeste {
+    private static SingletonMaps instance;
 
-    private static SingletonTeste instance;
-
-    private SingletonTeste() {
+    private SingletonMaps() {
     }
 
-    public static SingletonTeste getInstance() {
+    public static SingletonMaps getInstance() {
         if (instance == null) {
-            instance = new SingletonTeste();
+            instance = new SingletonMaps();
         }
         return instance;
     }

@@ -12,10 +12,11 @@
         android:scrollbarFadeDuration="30"
         app:layout_constraintDimensionRatio="1:1"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="44dp">
+        tools:layout_editor_absoluteY="44dp"
+        tools:ignore="MissingConstraints">
 
         <ProgressBar
-            android:id="@+id/progressPB"
+            android:id="@+id/follow_pb_loading"
             android:layout_width="130dp"
             android:layout_height="130dp"
             android:layout_alignParentTop="true"
@@ -26,29 +27,31 @@
             android:indeterminateTint="#5295d4"
             android:visibility="visible"
             tools:layout_editor_absoluteX="144dp"
-            tools:layout_editor_absoluteY="188dp" />
+            tools:layout_editor_absoluteY="188dp"
+            tools:targetApi="lollipop" />
 
         <ImageView
-            android:id="@+id/imgFollow"
+            android:id="@+id/follow_img_follow"
             android:layout_width="130dp"
             android:layout_height="130dp"
-            android:layout_above="@+id/lbFollow"
-            android:layout_alignEnd="@+id/progressPB"
-            android:layout_alignRight="@+id/progressPB"
+            android:layout_above="@+id/follow_tv_message"
+            android:layout_alignEnd="@+id/follow_pb_loading"
+            android:layout_alignRight="@+id/follow_pb_loading"
             android:layout_marginTop="172dp"
             android:adjustViewBounds="false"
+            android:contentDescription="@string/autenticando_dispositivo_label"
             android:scaleType="center"
             android:visibility="invisible" />
 
         <TextView
-            android:id="@+id/lbFollow"
+            android:id="@+id/follow_tv_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/progressPB"
+            android:layout_below="@+id/follow_pb_loading"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="33dp"
             android:fontFamily="sans-serif-condensed"
-            android:text="Autenticando dispositivo.\nAguade..."
+            android:text="@string/autenticando_dispositivo_label"
             android:textAlignment="center"
             android:textSize="28sp"
             tools:layout_editor_absoluteX="48dp"
