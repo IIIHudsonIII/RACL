@@ -93,11 +93,13 @@ public class Metodos {
                             .width(30));
 
             // Cria e adiciona o marcador inicial da rota
-            MarkerOptions moi = createCustomMarkerOptions(decodedPath.get(0), "Início", R.drawable.route_begin);
+            LatLng initialPosition = decodedPath.get(0);
+            MarkerOptions moi = createCustomMarkerOptions(initialPosition, "Início", R.drawable.route_begin);
             addMarkerToMap(moi, true);
 
             // Cria e adiciona o marcador final da rota
-            MarkerOptions moe = createCustomMarkerOptions(decodedPath.get(decodedPath.size() - 1), "Término", R.drawable.route_end);
+            LatLng finalPosition = decodedPath.get(decodedPath.size() - 1);
+            MarkerOptions moe = createCustomMarkerOptions(finalPosition, "Término", R.drawable.route_end);
             addMarkerToMap(moe, false);
         } catch (Exception e) {
             System.out.println("Erro durante a construção e inclusão da rota no mapa: " + e.getMessage());

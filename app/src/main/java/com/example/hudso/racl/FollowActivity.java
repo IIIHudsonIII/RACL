@@ -146,12 +146,13 @@ public class FollowActivity extends AppCompatActivity {
     // TODO Hudson
     // Cria thread para receber cada nova localização do GPS
     protected boolean runGPSPosition() {
-
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
+        // Verifica habilitação de permissões necessárias para uso do GPS
         if (ActivityCompat.checkSelfPermission(FollowActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(FollowActivity.this,
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // Questiona habilitação das permissões
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
                                 Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.INTERNET}
@@ -160,17 +161,15 @@ public class FollowActivity extends AppCompatActivity {
             return false;
         }
 
-        locationManager.requestLocationUpdates("gps", 5000, 0, new LocationListener() {
+        locationManager.requestLocationUpdates("gps", 3000, 0, new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                System.out.println("Hudson >>> NewPosition: " + location.getLongitude() + " / " + location.getLatitude());
-
                 DeviceBean deviceBean = SingletonDevice.getInstance().getDeviceBean();
                 deviceBean.setLast_latitude(location.getLatitude());
                 deviceBean.setLast_longitude(location.getLongitude());
                 SingletonDevice.getInstance().setDeviceBean(deviceBean);
-
-                //new DeviceService().execute(ActionEnum.FIND, deviceBean);
+                // Envia as novas coordenadas da posição do dispositivo
+                new DeviceService().execute(ActionEnum.UPDATE, SingletonDevice.getInstance().getDeviceBean());
             }
 
             @Override
