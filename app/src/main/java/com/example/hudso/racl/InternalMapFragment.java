@@ -1,16 +1,36 @@
 package com.example.hudso.racl;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.example.hudso.racl.bean.PointBean;
+import com.example.hudso.racl.bean.RouteBean;
+import com.example.hudso.racl.bean.ScheduleBean;
+import com.example.hudso.racl.singleton.SingletonDevice;
 import com.example.hudso.racl.singleton.SingletonMaps;
+import com.example.hudso.racl.task.DeviceServiceAsyncTask;
+import com.example.hudso.racl.task.LocationDeviceAsyncTask;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import static com.example.hudso.racl.outro.Metodos.getInstance;
 
 public class InternalMapFragment extends Fragment {
 
@@ -58,17 +78,21 @@ public class InternalMapFragment extends Fragment {
         map = googleMap;
         SingletonMaps.getInstance().setMap(googleMap);
 
-/**
-        MarkerOptions collectorMarker = Metodos.getInstance().createCustomMarkerOptions(
-                Metodos.getInstance().getDefaultListPoints().get(5), "Coletor", R.drawable.garbage_collector);
-        Marker marker = Metodos.getInstance().addMarkerToMap(collectorMarker, true);
+        RouteBean route = SingletonMaps.getInstance().getRoute();
+        if (route == null) {
+            return;
+        }
+        getInstance().drawDynamicRoute(route);
 
-        System.out.println("Hudson - ADICIONOU COLLECTOR NO MAPA");
+        loadDevice(route);
 
-        SingletonMaps.getInstance().setMarkerCollector(marker);
- **/
-
-        //createTimerPosition();
+//            TextView textView = findViewById(R.id.tw_internal_map_name);
+//            if (textView != null) {
+//                textView.setText(route.getName());
+//            }
+//        }
+//
+//        loadDevice();
     }
 
     @Override
@@ -84,36 +108,91 @@ public class InternalMapFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mMapView.onDestroy();
-    }
-
-    @Override
     public void onLowMemory() {
         super.onLowMemory();
         mMapView.onLowMemory();
     }
 
-//    public void createTimerPosition() {
-//        final Handler handler = new Handler();
-//        Timer timer = new Timer();
-//        TimerTask doAsynchronousTask = new TimerTask() {
-//            @Override
-//            public void run() {
-//                handler.post(new Runnable() {
-//                    public void run() {
-//                        try {
-//                            TestePerformBackgroundTask performBackgroundTask = new TestePerformBackgroundTask();
-//                            // TestePerformBackgroundTask this class is the class that extends AsynchTask
-//                            performBackgroundTask.execute();
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
-//            }
-//        };
-//        timer.schedule(doAsynchronousTask, 0, 2000); //execute in every 3000 ms
-//    }
+    private void loadDevice(RouteBean route) {
+        Calendar currentDate = Calendar.getInstance();
+        int weekDayCurrent = currentDate.get(Calendar.DAY_OF_WEEK);
+
+        for (ScheduleBean sb : route.getSchedules()) {
+            String week_day = sb.getWeek_day();
+
+            int weekDayCollector = ScheduleBean.WeekDay.valueOf(week_day.toUpperCase()).ordinal();
+            if (weekDayCollector > -1) {
+                if (weekDayCollector == weekDayCurrent) {
+                    DateFormat dateFormat = new SimpleDateFormat("kk:mm:ss");
+                    try {
+                        Date dCurrent = dateFormat.parse(dateFormat.format(new Date()));
+                        Date dInitial = dateFormat.parse(sb.getInitial_hour() + ":00");
+                        Date dFinal = dateFormat.parse(sb.getFinal_hour() + ":00");
+
+                        if (dCurrent.after(dInitial) && dCurrent.before(dFinal)) {
+                            new DeviceServiceAsyncTask(
+                                    new DeviceServiceAsyncTask.Behaviour() {
+                                        @Override
+                                        public void success() {
+                                            createTimerPosition();
+                                        }
+
+                                        @Override
+                                        public void failed() {
+
+                                        }
+                                    }
+                            ).find(sb.getId_device());
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
+    private Timer timer;
+
+    public void createTimerPosition() {
+        if (timer != null) {
+            timer.cancel();
+            timer.purge();
+            timer = null;
+        }
+        timer = new Timer();
+
+        TimerTask doAsynchronousTask = new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    new DeviceServiceAsyncTask(new DeviceServiceAsyncTask.Behaviour() {
+                        @Override
+                        public void success() {
+                            // LocationDeviceAsyncTask this class is the class that extends AsynchTask
+                            new LocationDeviceAsyncTask().execute();
+                        }
+
+                        @Override
+                        public void failed() {
+                        }
+                    }).find(SingletonDevice.getInstance().getDeviceBean().getId());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        timer.schedule(doAsynchronousTask, 0, 5000); //execute in every 3000 ms
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+        if (timer != null) {
+            timer.cancel();
+            timer.purge();
+            timer = null;
+        }
+    }
 }

@@ -1,35 +1,29 @@
 package com.example.hudso.racl;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringDef;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.hudso.racl.bean.DeviceBean;
-import com.example.hudso.racl.outro.DeviceServices;
+import com.example.hudso.racl.task.DeviceServiceAsyncTask;
 import com.example.hudso.racl.singleton.SingletonDevice;
-
-import org.json.JSONObject;
 
 import static android.view.View.VISIBLE;
 
-public class FollowActivity extends AppCompatActivity {
+public class FollowActivity extends AppCompatActivity implements DeviceServiceAsyncTask.Behaviour {
 
     private ImageView follow_img_follow;
     private ProgressBar follow_pb_loading;
@@ -42,7 +36,7 @@ public class FollowActivity extends AppCompatActivity {
 
         initialize();
 
-        new DeviceService().execute(ActionEnum.FIND, SingletonDevice.getInstance().getDeviceBean());
+        new DeviceServiceAsyncTask(this).find(SingletonDevice.getInstance().getDeviceBean());
     }
 
     protected void initialize() {
@@ -50,79 +44,17 @@ public class FollowActivity extends AppCompatActivity {
         follow_pb_loading = (ProgressBar) findViewById(R.id.follow_pb_loading);
         follow_tv_message = (TextView) findViewById(R.id.follow_tv_message);
     }
-/*
-    // TODO Hudson
-    // Criar thread para realizar update da posição do dispositivo
-    private void createTimerPosition() {
-        final Handler handler = new Handler();
-        Timer timer = new Timer();
-        TimerTask doAsynchronousTask = new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(new Runnable() {
-                    public void run() {
-                        try {
-                            String id = Settings.Secure.getString(getBaseContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-                            Location newLocation = new Location(LocationManager.PASSIVE_PROVIDER);
-                            System.out.println("Hudson - Posição do dispositivo " + id + ": " + newLocation.getLatitude() + " / " + newLocation.getLongitude());
 
-                            // TODO Hudson
-                            new DeviceService().execute();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            }
-        };
-        timer.schedule(doAsynchronousTask, 0, 2000); //execute in every 3000 ms
-    }
-*/
-
-    enum ActionEnum {
-        FIND, UPDATE
+    @Override
+    public void success() {
+        if (runGPSPosition()) {
+            activateFollow();
+        }
     }
 
-    // TODO Hudson
-    // Realizar update da nova localização do dispositivo
-    public final class DeviceService extends AsyncTask<Pair<ActionEnum, DeviceBean>, Void, DeviceBean> {
-
-        protected void execute(@NonNull ActionEnum action, DeviceBean deviceBean) {
-            if (deviceBean != null) {
-                System.out.println("Hudson - ID do dispositivo: " + deviceBean.getId());
-                super.execute(new Pair<>(action, deviceBean));
-            } else {
-                desactiveFollow();
-            }
-        }
-
-        @Override
-        protected DeviceBean doInBackground(Pair<ActionEnum, DeviceBean>... params) {
-            DeviceServices ds = new DeviceServices();
-            switch (params[0].first) {
-                case FIND:
-                    return ds.findById(params[0].second);
-                case UPDATE:
-                    return ds.update(params[0].second);
-                default:
-            }
-            return null;
-        }
-
-        @SuppressLint("RestrictedApi")
-        @Override
-        protected void onPostExecute(DeviceBean deviceBean) {
-            System.out.println("Hudson.DeviceService - Dispositivo autenticado: " + deviceBean);
-            SingletonDevice.getInstance().setDeviceBean(deviceBean);
-
-            if (deviceBean != null) {
-                if (runGPSPosition()) {
-                    activateFollow();
-                }
-            } else {
-                desactiveFollow();
-            }
-        }
+    @Override
+    public void failed() {
+        desactiveFollow();
     }
 
     protected void activateFollow() {
@@ -169,7 +101,7 @@ public class FollowActivity extends AppCompatActivity {
                 deviceBean.setLast_longitude(location.getLongitude());
                 SingletonDevice.getInstance().setDeviceBean(deviceBean);
                 // Envia as novas coordenadas da posição do dispositivo
-                new DeviceService().execute(ActionEnum.UPDATE, SingletonDevice.getInstance().getDeviceBean());
+                new DeviceServiceAsyncTask(FollowActivity.this).update(SingletonDevice.getInstance().getDeviceBean());
             }
 
             @Override
@@ -202,4 +134,80 @@ public class FollowActivity extends AppCompatActivity {
             activateFollow();
         }
     }
+
+
+/*
+    // TODO Hudson
+    // Criar thread para realizar update da posição do dispositivo
+    private void createTimerPosition() {
+        final Handler handler = new Handler();
+        Timer timer = new Timer();
+        TimerTask doAsynchronousTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        try {
+                            String id = Settings.Secure.getString(getBaseContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+                            Location newLocation = new Location(LocationManager.PASSIVE_PROVIDER);
+                            System.out.println("Hudson - Posição do dispositivo " + id + ": " + newLocation.getLatitude() + " / " + newLocation.getLongitude());
+
+                            // TODO Hudson
+                            new DeviceServiceAsyncTask().execute();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        };
+        timer.schedule(doAsynchronousTask, 0, 2000); //execute in every 3000 ms
+    }
+*/
+
+//    enum ActionEnum {
+//        FIND, UPDATE
+//    }
+//
+//    // TODO Hudson
+//    // Realizar update da nova localização do dispositivo
+//    public final class DeviceServiceAsyncTask extends AsyncTask<Pair<ActionEnum, DeviceBean>, Void, DeviceBean> {
+//
+//        protected void execute(@NonNull ActionEnum action, DeviceBean deviceBean) {
+//            if (deviceBean != null) {
+//                System.out.println("Hudson - ID do dispositivo: " + deviceBean.getId());
+//                super.execute(new Pair<>(action, deviceBean));
+//            } else {
+//                desactiveFollow();
+//            }
+//        }
+//
+//        @Override
+//        protected DeviceBean doInBackground(Pair<ActionEnum, DeviceBean>... params) {
+//            DeviceServices ds = new DeviceServices();
+//            switch (params[0].first) {
+//                case FIND:
+//                    return ds.findById(params[0].second);
+//                case UPDATE:
+//                    return ds.update(params[0].second);
+//                default:
+//            }
+//            return null;
+//        }
+//
+//        @SuppressLint("RestrictedApi")
+//        @Override
+//        protected void onPostExecute(DeviceBean deviceBean) {
+//            System.out.println("Hudson.DeviceServiceAsyncTask - Dispositivo autenticado: " + deviceBean);
+//            SingletonDevice.getInstance().setDeviceBean(deviceBean);
+//
+//            if (deviceBean != null) {
+//                if (runGPSPosition()) {
+//                    activateFollow();
+//                }
+//            } else {
+//                desactiveFollow();
+//            }
+//        }
+//    }
 }

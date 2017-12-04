@@ -33,7 +33,7 @@ abstract class Services {
         if (parameters != null && parameters.length > 0) {
             url.append("?");
             for (Pair p : parameters) {
-                url.append(p.first).append("=").append(p.second);
+                url.append(p.first).append("=").append(p.second).append("&");
             }
         }
         return url.toString();

@@ -77,14 +77,14 @@ public class ScheduleBean {
         return getFormattedWeek_Day() + ", das " + getInitial_hour() + "h às " + getFinal_hour() + "h";
     }
 
-    enum WeekDay {
+    public enum WeekDay {
+        SUNDAY("Domingo"),
         MONDAY("Segunda-feira"),
         TUESDAY("Terça-feira"),
         WEDNESDAY("Quarta-feira"),
         THURSDAY("Quinta-feira"),
         FRIDAY("Sexta-feira"),
-        SATURDAY("Sábado"),
-        SUNDAY("Domingo");
+        SATURDAY("Sábado");
 
         private String description;
 
