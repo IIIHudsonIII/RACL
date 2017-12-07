@@ -1,10 +1,7 @@
-package com.example.hudso.racl.outro;
+package com.example.hudso.racl.service;
 
 import android.support.annotation.StringDef;
 import android.util.Pair;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 abstract class Services {
     protected static final String DEVICE = "/device";
@@ -22,6 +19,7 @@ abstract class Services {
 
     protected final String URL_DEFAULT = "http://10.0.2.2:8080/";
 
+    @Deprecated
     public String getURL() {
         return getEvaluatedURL();
     }

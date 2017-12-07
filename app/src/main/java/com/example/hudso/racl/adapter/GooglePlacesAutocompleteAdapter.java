@@ -1,4 +1,4 @@
-package com.example.hudso.racl.outro;
+package com.example.hudso.racl.adapter;
 
 import android.content.Context;
 import android.support.annotation.StringDef;

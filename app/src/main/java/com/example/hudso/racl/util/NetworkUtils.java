@@ -1,18 +1,14 @@
-package com.example.hudso.racl.utils;
+package com.example.hudso.racl.util;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.StringDef;
 import android.util.Pair;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
 
 /**
  *
@@ -72,7 +68,7 @@ public class NetworkUtils {
                 is = connection.getErrorStream();
             }
 
-            jsonAsString = Utils.parseInputStreamToString(is);
+            jsonAsString = InputStreamUtils.parseInputStreamToString(is);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {

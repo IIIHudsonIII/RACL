@@ -18,7 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.hudso.racl.bean.DeviceBean;
-import com.example.hudso.racl.task.DeviceServiceAsyncTask;
+import com.example.hudso.racl.service.task.DeviceServiceAsyncTask;
 import com.example.hudso.racl.singleton.SingletonDevice;
 
 import static android.view.View.VISIBLE;

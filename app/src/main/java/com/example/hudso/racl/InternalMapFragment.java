@@ -1,22 +1,19 @@
 package com.example.hudso.racl;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.HorizontalScrollView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.hudso.racl.bean.PointBean;
 import com.example.hudso.racl.bean.RouteBean;
 import com.example.hudso.racl.bean.ScheduleBean;
+import com.example.hudso.racl.util.MapUtils;
 import com.example.hudso.racl.singleton.SingletonDevice;
 import com.example.hudso.racl.singleton.SingletonMaps;
-import com.example.hudso.racl.task.DeviceServiceAsyncTask;
-import com.example.hudso.racl.task.LocationDeviceAsyncTask;
+import com.example.hudso.racl.service.task.DeviceServiceAsyncTask;
+import com.example.hudso.racl.service.task.LocationDeviceAsyncTask;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
@@ -30,7 +27,6 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.example.hudso.racl.outro.Metodos.getInstance;
 
 public class InternalMapFragment extends Fragment {
 
@@ -82,17 +78,15 @@ public class InternalMapFragment extends Fragment {
         if (route == null) {
             return;
         }
-        getInstance().drawDynamicRoute(route);
+
+        TextView textView = getView().findViewById(R.id.tw_internal_map_name);
+        if (textView != null) {
+            textView.setText(route.getName());
+        }
+
+        new MapUtils().drawDynamicRoute(route);
 
         loadDevice(route);
-
-//            TextView textView = findViewById(R.id.tw_internal_map_name);
-//            if (textView != null) {
-//                textView.setText(route.getName());
-//            }
-//        }
-//
-//        loadDevice();
     }
 
     @Override
@@ -120,7 +114,7 @@ public class InternalMapFragment extends Fragment {
         for (ScheduleBean sb : route.getSchedules()) {
             String week_day = sb.getWeek_day();
 
-            int weekDayCollector = ScheduleBean.WeekDay.valueOf(week_day.toUpperCase()).ordinal();
+            int weekDayCollector = ScheduleBean.WeekDay.valueOf(week_day.toUpperCase()).ordinal() + 1;
             if (weekDayCollector > -1) {
                 if (weekDayCollector == weekDayCurrent) {
                     DateFormat dateFormat = new SimpleDateFormat("kk:mm:ss");
@@ -139,7 +133,6 @@ public class InternalMapFragment extends Fragment {
 
                                         @Override
                                         public void failed() {
-
                                         }
                                     }
                             ).find(sb.getId_device());
@@ -169,7 +162,6 @@ public class InternalMapFragment extends Fragment {
                     new DeviceServiceAsyncTask(new DeviceServiceAsyncTask.Behaviour() {
                         @Override
                         public void success() {
-                            // LocationDeviceAsyncTask this class is the class that extends AsynchTask
                             new LocationDeviceAsyncTask().execute();
                         }
 
@@ -182,7 +174,7 @@ public class InternalMapFragment extends Fragment {
                 }
             }
         };
-        timer.schedule(doAsynchronousTask, 0, 5000); //execute in every 3000 ms
+        timer.schedule(doAsynchronousTask, 0, 5000);
     }
 
     @Override

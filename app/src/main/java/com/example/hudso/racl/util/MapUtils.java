@@ -1,9 +1,6 @@
-package com.example.hudso.racl.outro;
+package com.example.hudso.racl.util;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.location.Address;
-import android.location.Geocoder;
 
 import com.example.hudso.racl.R;
 import com.example.hudso.racl.bean.RouteBean;
@@ -17,28 +14,13 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by hudso on 24/09/2017.
  */
 
-public class Metodos {
-
-    private static Metodos instance;
-
-    // Singleton
-    private Metodos() {
-    }
-
-    public static Metodos getInstance() {
-        if (instance == null) {
-            instance = new Metodos();
-        }
-        return instance;
-    }
+public class MapUtils {
 
     /**
      * NÃO MODIFICAR!!!! ESTÁ NA MONOGRAFIA
@@ -142,24 +124,4 @@ public class Metodos {
 //
 //        return decodedPath;
 //    }
-
-    // TODO Hudson
-    // Tentar mover este método para outro local
-    public LatLng getLocationFromAddress(Context context, String strAddress) {
-        try {
-            Geocoder coder = new Geocoder(context, Locale.getDefault());
-            List<Address> address = coder.getFromLocationName(strAddress, 1);
-            if (address != null && address.size() > 0) {
-                Address location;
-                for (int i = 0; i < address.size(); i++) {
-                    System.out.println("getLocationFromAddress(" + strAddress + ") >>> " + address.get(i).getAddressLine(0));
-                }
-                location = address.get(0);
-                return new LatLng(location.getLatitude(), location.getLongitude());
-            }
-        } catch (Exception e) {
-
-        }
-        return new LatLng(0, 0);
-    }
 }

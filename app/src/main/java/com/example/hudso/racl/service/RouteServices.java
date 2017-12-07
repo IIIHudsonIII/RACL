@@ -1,11 +1,12 @@
-package com.example.hudso.racl.outro;
+package com.example.hudso.racl.service;
 
 import android.util.Log;
 import android.util.Pair;
 
 import com.example.hudso.racl.bean.PointBean;
 import com.example.hudso.racl.bean.RouteBean;
-import com.example.hudso.racl.utils.NetworkUtils;
+import com.example.hudso.racl.util.ApiDirectionsDataParser;
+import com.example.hudso.racl.util.NetworkUtils;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
@@ -16,12 +17,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Class to define route services.
+ *
+ * @author Hudson Henrique Lopes
+ * @since 03/12/2017
+ */
 public class RouteServices extends Services {
 
     public RouteServices() {
         this.direction = ROUTE;
     }
 
+    @Deprecated
     public JSONObject findById(String id) {
         String url = getEvaluatedURL(new Pair("id", id));
         String response = NetworkUtils.getJSONFromAPI(url, NetworkUtils.GET);
@@ -35,6 +43,11 @@ public class RouteServices extends Services {
         return null;
     }
 
+    /**
+     * Search route by point informations.
+     * @param pointBean
+     * @return
+     */
     public RouteBean findByLatLng(PointBean pointBean) {
         String url = getEvaluatedURL(
                 new Pair<>("latitude", pointBean.getLatitude()),
@@ -44,13 +57,6 @@ public class RouteServices extends Services {
             try {
                 JSONObject jsonRoute = new JSONObject(response);
                 return jsonToRouteBean(jsonRoute);
-//                JSONArray jsonRoutes = new JSONArray(response);
-//
-//                for (int iRoute = 0; iRoute < jsonRoutes.length(); iRoute++) {
-//                    JSONObject jsonRoute = jsonRoutes.getJSONObject(iRoute);
-//                    return jsonToRouteBean(jsonRoute);
-//                }
-//                return jsonToRouteBean(jsonRoute);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -58,6 +64,13 @@ public class RouteServices extends Services {
         return null;
     }
 
+    /**
+     * Parse <code>{@link JSONObject}</code> informations to <code>{@link com.example.hudso.racl.bean.DeviceBean}</code>.
+     *
+     * @param jsonRoute
+     * @return
+     * @throws JSONException
+     */
     private RouteBean jsonToRouteBean(JSONObject jsonRoute) throws JSONException {
         RouteBean routeBean = new RouteBean(jsonRoute.getString("id"), jsonRoute.getString("name"));
         routeBean.setLatitude_min(jsonRoute.getDouble("latitude_min"));
@@ -117,7 +130,7 @@ public class RouteServices extends Services {
 
     private List<LatLng> getDrawPoints(List<PointBean> points) {
         String json = NetworkUtils.getJSONFromAPI(getUrlGoogleDirectionsAPI(points), NetworkUtils.GET);
-        Log.i("Hudson-Searching routes", json);
+        Log.i("RACL.LOG - Points along", json);
         return parseJsonToListLatLng(json);
     }
 
@@ -128,7 +141,7 @@ public class RouteServices extends Services {
         try {
             jObject = new JSONObject(strJson);
             Log.d("ParserTask", strJson);
-            DataParser parser = new DataParser();
+            ApiDirectionsDataParser parser = new ApiDirectionsDataParser();
             Log.d("ParserTask", parser.toString());
 
             // Starts parsing data
@@ -166,6 +179,8 @@ public class RouteServices extends Services {
     }
 
     // Utilizar a api do google mesmo com os pontos cadastrados pelo usuário https://maps.googleapis.com/maps/api/directions
+    /** NÃO MODIFICAR!!! Está na monografia */
+    // TODO Hudson
     private String getUrlGoogleDirectionsAPI(List<PointBean> points) {
         // Tipo de retorno esperado (XML ou JSON)
         String output = "json";
@@ -193,19 +208,4 @@ public class RouteServices extends Services {
         String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
         return url;
     }
-/*
-        https://maps.googleapis.com/maps/api/directions/json?origin=-26.8886192,-49.09570150000002&destination=-26.8889187,-49.09678050000002
-        {
-            "id": "8c94ff2c-b713-4203-8849-4db96217ac01",
-                "name": "R. Emílio Ninow, 155 - Escola Agrícola, Blumenau - SC, 89031-240, Brasil",
-                "latitude": -26.8886192,
-                "longitude": -49.09570150000002
-        },
-        {
-            "id": "ee9c8e08-e9ed-465d-b746-018355041373",
-                "name": "R. Ernesto Jensen, 14 - Asilo, Blumenau - SC, Brasil",
-                "latitude": -26.8889187,
-                "longitude": -49.09678050000002
-        },
-*/
 }

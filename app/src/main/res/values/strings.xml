@@ -21,4 +21,7 @@
     <string name="rastreio_ativado_msg">Rastreio ativado com sucesso!</string>
     <string name="rastreio_nao_ativado_msg">Não foi possível ativar o rastreio do dispositivo.</string>
 
+    <string name="msg_select_address">Necessário selecionar um endereço para visualização da rota.</string>
+    <string name="msg_no_routes_found">Nenhuma rota localizada para o endereço informado.</string>
+
 </resources>

@@ -71,6 +71,8 @@
             android:layout_height="0dp"
             android:layout_marginTop="50dp"
             android:layout_weight="0.30"
+            android:defaultFocusHighlightEnabled="true"
+            android:focusable="auto"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="422dp">
 
