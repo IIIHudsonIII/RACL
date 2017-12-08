@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected final void initialize() {
         String idDevice = Settings.Secure.getString(getBaseContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-        System.out.println("Hudson >>> ID_Device: "+idDevice);
+        System.out.println("RACL.LOG >>> ID_Device: "+idDevice);
         SingletonDevice.getInstance().setDeviceBean(new DeviceBean(idDevice));
 
         SingletonMaps.getInstance();

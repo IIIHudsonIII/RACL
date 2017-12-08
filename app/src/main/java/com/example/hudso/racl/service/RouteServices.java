@@ -5,7 +5,7 @@ import android.util.Pair;
 
 import com.example.hudso.racl.bean.PointBean;
 import com.example.hudso.racl.bean.RouteBean;
-import com.example.hudso.racl.util.ApiDirectionsDataParser;
+import com.example.hudso.racl.util.GoogleMapsAPIDataParser;
 import com.example.hudso.racl.util.NetworkUtils;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -141,7 +141,7 @@ public class RouteServices extends Services {
         try {
             jObject = new JSONObject(strJson);
             Log.d("ParserTask", strJson);
-            ApiDirectionsDataParser parser = new ApiDirectionsDataParser();
+            GoogleMapsAPIDataParser parser = new GoogleMapsAPIDataParser();
             Log.d("ParserTask", parser.toString());
 
             // Starts parsing data
@@ -179,8 +179,6 @@ public class RouteServices extends Services {
     }
 
     // Utilizar a api do google mesmo com os pontos cadastrados pelo usuário https://maps.googleapis.com/maps/api/directions
-    /** NÃO MODIFICAR!!! Está na monografia */
-    // TODO Hudson
     private String getUrlGoogleDirectionsAPI(List<PointBean> points) {
         // Tipo de retorno esperado (XML ou JSON)
         String output = "json";

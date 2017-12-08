@@ -17,13 +17,14 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import java.util.List;
 
 /**
- * Created by hudso on 24/09/2017.
+ * @author Hudson Henrique Lopes
+ * @since 24/09/2017
  */
 
 public class MapUtils {
 
     /**
-     * NÃO MODIFICAR!!!! ESTÁ NA MONOGRAFIA
+     * Criação de marcador a ser adicionado no mapa.
      * @param position
      * @param title
      * @param rDrawableIcon
@@ -43,7 +44,7 @@ public class MapUtils {
     }
 
     /**
-     * NÃO MODIFICAR!!!! ESTÁ NA MONOGRAFIA
+     * Adição do marcado no mapa.
      * @param markerOptions
      * @param locate
      * @return
@@ -74,7 +75,7 @@ public class MapUtils {
     }
 
     /**
-     * NÃO MODIFICAR!!!! ESTÁ NA MONOGRAFIA
+     * Desenhar rotas no mapa.
      * @param decodedPath
      */
     protected void drawLinesRoute(List<LatLng> decodedPath) {

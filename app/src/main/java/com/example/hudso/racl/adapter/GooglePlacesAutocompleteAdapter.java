@@ -21,7 +21,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 /**
- * Created by hudso on 02/11/2017.
+ * @author Hudson Henrique Lopes
+ * @since 02/11/2017
  */
 
 public class GooglePlacesAutocompleteAdapter extends ArrayAdapter implements Filterable {
@@ -140,10 +141,10 @@ public class GooglePlacesAutocompleteAdapter extends ArrayAdapter implements Fil
                 jsonResults.append(buff, 0, read);
             }
         } catch (MalformedURLException e) {
-            Log.e(LOG_TAG, "Hudson - Error processing Places API URL_DEFAULT", e);
+            Log.e(LOG_TAG, "RACL.LOG - Error processing Places API URL_DEFAULT", e);
             return resultList;
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Hudson - Error connecting to Places API", e);
+            Log.e(LOG_TAG, "RACL.LOG - Error connecting to Places API", e);
             return resultList;
         } finally {
             if (conn != null) {
@@ -159,19 +160,16 @@ public class GooglePlacesAutocompleteAdapter extends ArrayAdapter implements Fil
             // Extract the Place descriptions from the results
             resultList = new ArrayList(predsJsonArray.length());
             for (int i = 0; i < predsJsonArray.length(); i++) {
-                System.out.println("Hudson - ============================================================");
                 if (TYPE == CITY) {
-                    System.out.println("Hudson - " + predsJsonArray.getJSONObject(i).getString("description"));
                     resultList.add(predsJsonArray.getJSONObject(i).getJSONArray("terms").getJSONObject(0).get("value") + " - " +
                             predsJsonArray.getJSONObject(i).getJSONArray("terms").getJSONObject(1).get("value"));
                 } else {
                     JSONObject city = predsJsonArray.getJSONObject(i).getJSONObject("structured_formatting");
-                    System.out.println("Hudson >>>>> "+city.getString("main_text") + " // "+predsJsonArray.getJSONObject(i).getString("description"));
                     resultList.add(city.getString("main_text")/*+", "+city.getString("secondary_text")*/);
                 }
             }
         } catch (JSONException e) {
-            Log.e(LOG_TAG, "Cannot process JSON results", e);
+            Log.e(LOG_TAG, "RACL.LOG - Cannot process JSON results", e);
         }
 
         return resultList;

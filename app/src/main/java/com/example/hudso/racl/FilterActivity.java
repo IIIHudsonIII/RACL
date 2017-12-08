@@ -110,8 +110,12 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
         filter_btn_view.setEnabled(true);
     }
 
-    // TODO Hudson
-    // Tentar mover este método para outro local
+    /**
+     * Encontra as posições do endereço informado.
+     * @param context
+     * @param strAddress
+     * @return
+     */
     public LatLng getLocationFromAddress(Context context, String strAddress) {
         try {
             Geocoder coder = new Geocoder(context, Locale.getDefault());

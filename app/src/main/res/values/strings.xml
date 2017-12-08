@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">RACL - Rastreamento e Acompanhamento da Coleta de Lixo</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="btn_search_description">Consulta</string>
     <string name="btn_follow_description">Rastreio</string>
     <string name="caption_app_racl">Rastreamento e Acompanhamento da Coleta de Lixo</string>
@@ -13,7 +12,6 @@
     <string name="caption_percurso">Percurso</string>
     <string name="title_activity_route">RouteActivity</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="rota_label">Rota:</string>
     <string name="pontos_de_referencia_label">Pontos de referência:</string>
     <string name="agendamentos_de_coleta_label">Agendamentos de coleta:</string>

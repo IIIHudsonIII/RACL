@@ -1,7 +1,8 @@
 package com.example.hudso.racl.bean;
 
 /**
- * Created by hudso on 18/11/2017.
+ * @author Hudson Henrique Lopes
+ * @since 18/11/2017
  */
 
 public class ScheduleBean {

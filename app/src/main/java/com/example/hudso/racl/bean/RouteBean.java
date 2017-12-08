@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by hudso on 16/10/2017.
+ * @author Hudson Henrique Lopes
+ * @since 16/10/2017
  */
 
 public class RouteBean {
