@@ -34,7 +34,7 @@ public class LocationDeviceAsyncTask extends AsyncTask<Void, Void, LatLng> {
             SingletonMaps.getInstance().getMarkerCollector().remove();
         }
 
-        if (latLng != null) {
+        if (latLng != null && latLng.longitude != 0 && latLng.latitude != 0) {
             MapUtils mu = new MapUtils();
             // TEXTO FIXO
             SingletonMaps.getInstance().setMarkerCollector(

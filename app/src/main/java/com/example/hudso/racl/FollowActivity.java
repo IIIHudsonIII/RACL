@@ -35,14 +35,18 @@ public class FollowActivity extends AppCompatActivity implements DeviceServiceAs
         setContentView(R.layout.activity_follow);
 
         initialize();
-
-        new DeviceServiceAsyncTask(this).find(SingletonDevice.getInstance().getDeviceBean());
     }
 
     protected void initialize() {
         follow_img_follow = ((ImageView) findViewById(R.id.follow_img_follow));
         follow_pb_loading = (ProgressBar) findViewById(R.id.follow_pb_loading);
         follow_tv_message = (TextView) findViewById(R.id.follow_tv_message);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new DeviceServiceAsyncTask(this).find(SingletonDevice.getInstance().getDeviceBean());
     }
 
     @Override
@@ -92,7 +96,7 @@ public class FollowActivity extends AppCompatActivity implements DeviceServiceAs
             return false;
         }
 
-        locationManager.requestLocationUpdates("gps", 3000, 0, new LocationListener() {
+        locationManager.requestLocationUpdates("gps", 5000, 0, new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 DeviceBean deviceBean = SingletonDevice.getInstance().getDeviceBean();

@@ -17,7 +17,10 @@ abstract class Services {
     protected @Direction
     String direction;
 
-    protected final String URL_DEFAULT = "http://10.0.2.2:8080/";
+//    protected final String URL_DEFAULT = "http://10.0.2.2:8080/";
+//    protected final String URL_DEFAULT = "http://192.168.15.194:8080/";
+    protected final String URL_DEFAULT = "http://35.198.40.128:8080";
+//    protected final String URL_DEFAULT = "http://hudsonserver.ddns.net:8080/";
 
     @Deprecated
     public String getURL() {

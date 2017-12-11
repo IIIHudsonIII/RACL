@@ -59,7 +59,7 @@ public class MapUtils {
         Marker marker = map.addMarker(markerOptions);
         if (locate) {
             CameraPosition p = CameraPosition.builder().target(marker.getPosition())
-                    .zoom(20).bearing(8).tilt(45).build();
+                    .zoom(17).bearing(8).tilt(45).build();
             map.moveCamera(CameraUpdateFactory.newCameraPosition(p));
         }
         return marker;
