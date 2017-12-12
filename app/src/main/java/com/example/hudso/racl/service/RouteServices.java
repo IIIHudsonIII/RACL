@@ -45,6 +45,7 @@ public class RouteServices extends Services {
 
     /**
      * Search route by point informations.
+     *
      * @param pointBean
      * @return
      */
@@ -113,7 +114,10 @@ public class RouteServices extends Services {
         }
         List<List<PointBean>> parts = chopped(routeBean.getPoints(), 6);
         for (List<PointBean> part : parts) {
-            routeBean.getDrawPoints().addAll(getDrawPoints(part));
+            List<LatLng> partsBetween = getDrawPoints(part);
+            if (partsBetween != null) {
+                routeBean.getDrawPoints().addAll(partsBetween);
+            }
         }
     }
 
@@ -162,20 +166,23 @@ public class RouteServices extends Services {
         //for (int i = 0; i < routes.size(); i++) {
 
         // Fetching i-th route
-        List<HashMap<String, String>> path = routes.get(i);
+        if (routes != null && !routes.isEmpty()) {
+            List<HashMap<String, String>> path = routes.get(i);
 
-        // Fetching all the points in i-th route
-        for (int j = 0; j < path.size(); j++) {
-            HashMap<String, String> point = path.get(j);
+            // Fetching all the points in i-th route
+            for (int j = 0; j < path.size(); j++) {
+                HashMap<String, String> point = path.get(j);
 
-            double lat = Double.parseDouble(point.get("lat"));
-            double lng = Double.parseDouble(point.get("lng"));
-            LatLng position = new LatLng(lat, lng);
+                double lat = Double.parseDouble(point.get("lat"));
+                double lng = Double.parseDouble(point.get("lng"));
+                LatLng position = new LatLng(lat, lng);
 
-            points.add(position);
+                points.add(position);
+            }
+            //}
+            return points;
         }
-        //}
-        return points;
+        return null;
     }
 
     // Utilizar a api do google mesmo com os pontos cadastrados pelo usuário https://maps.googleapis.com/maps/api/directions

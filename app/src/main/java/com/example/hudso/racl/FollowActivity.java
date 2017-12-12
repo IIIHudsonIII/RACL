@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -21,6 +22,8 @@ import com.example.hudso.racl.bean.DeviceBean;
 import com.example.hudso.racl.service.task.DeviceServiceAsyncTask;
 import com.example.hudso.racl.singleton.SingletonDevice;
 
+import java.util.List;
+
 import static android.view.View.VISIBLE;
 
 public class FollowActivity extends AppCompatActivity implements DeviceServiceAsyncTask.Behaviour {
@@ -28,6 +31,9 @@ public class FollowActivity extends AppCompatActivity implements DeviceServiceAs
     private ImageView follow_img_follow;
     private ProgressBar follow_pb_loading;
     private TextView follow_tv_message;
+    private LocationManager locationManager;
+    private DeviceServiceAsyncTask deviceServiceAsyncTask;
+    private LocationListener locationListener;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -46,6 +52,9 @@ public class FollowActivity extends AppCompatActivity implements DeviceServiceAs
     @Override
     protected void onResume() {
         super.onResume();
+        String idDevice = Settings.Secure.getString(getBaseContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        System.out.println("RACL.LOG >>> ID_Device: "+idDevice);
+        SingletonDevice.getInstance().setDeviceBean(new DeviceBean(idDevice));
         new DeviceServiceAsyncTask(this).find(SingletonDevice.getInstance().getDeviceBean());
     }
 
@@ -81,7 +90,7 @@ public class FollowActivity extends AppCompatActivity implements DeviceServiceAs
 
     // Cria thread para receber cada nova localização do GPS
     protected boolean runGPSPosition() {
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         // Verifica habilitação de permissões necessárias para uso do GPS
         if (ActivityCompat.checkSelfPermission(FollowActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) !=
@@ -96,7 +105,7 @@ public class FollowActivity extends AppCompatActivity implements DeviceServiceAs
             return false;
         }
 
-        locationManager.requestLocationUpdates("gps", 5000, 0, new LocationListener() {
+        locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 DeviceBean deviceBean = SingletonDevice.getInstance().getDeviceBean();
@@ -104,7 +113,8 @@ public class FollowActivity extends AppCompatActivity implements DeviceServiceAs
                 deviceBean.setLast_longitude(location.getLongitude());
                 SingletonDevice.getInstance().setDeviceBean(deviceBean);
                 // Envia as novas coordenadas da posição do dispositivo
-                new DeviceServiceAsyncTask(FollowActivity.this).update(SingletonDevice.getInstance().getDeviceBean());
+                deviceServiceAsyncTask = new DeviceServiceAsyncTask(FollowActivity.this);
+                deviceServiceAsyncTask.update(SingletonDevice.getInstance().getDeviceBean());
             }
 
             @Override
@@ -120,7 +130,10 @@ public class FollowActivity extends AppCompatActivity implements DeviceServiceAs
                 Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 startActivity(i);
             }
-        });
+        };
+
+
+        locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
         return true;
     }
 
@@ -136,5 +149,20 @@ public class FollowActivity extends AppCompatActivity implements DeviceServiceAs
         if (runGPSPosition()) {
             activateFollow();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (deviceServiceAsyncTask != null) {
+            deviceServiceAsyncTask.cancel(true);
+            deviceServiceAsyncTask = null;
+        }
+        if (locationManager != null) {
+            locationManager.getAllProviders().removeAll(locationManager.getProviders(true));
+            locationManager.removeUpdates(locationListener);
+            locationManager = null;
+        }
+        locationListener = null;
     }
 }

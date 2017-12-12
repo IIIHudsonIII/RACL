@@ -93,6 +93,20 @@ public class InternalMapFragment extends Fragment {
     public void onResume() {
         super.onResume();
         mMapView.onResume();
+
+        RouteBean route = SingletonMaps.getInstance().getRoute();
+        if (route == null) {
+            return;
+        }
+
+        TextView textView = getView().findViewById(R.id.tw_internal_map_name);
+        if (textView != null) {
+            textView.setText(route.getName());
+        }
+
+        new MapUtils().drawDynamicRoute(route);
+
+        loadDevice(route);
     }
 
     @Override
