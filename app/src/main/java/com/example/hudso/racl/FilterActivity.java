@@ -79,10 +79,6 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
                 imm.hideSoftInputFromWindow(filter_ac_adress.getWindowToken(), 0);
             }
         });
-
-        // Remover
-        filter_ac_city.setText("Blumenau - S");
-        filter_ac_adress.setText("Benjamin Constant 266");
     }
 
     @Override

@@ -97,8 +97,8 @@ public class GooglePlacesAutocompleteAdapter extends ArrayAdapter implements Fil
     }
 
     /**
-     * http://codetheory.in/google-place-api-autocomplete-service-in-android-application/
-     *
+     * Search options to list on field, by Google API.
+     * More API parameters: http://codetheory.in/google-place-api-autocomplete-service-in-android-application/
      * @param input
      * @return
      */
@@ -113,8 +113,6 @@ public class GooglePlacesAutocompleteAdapter extends ArrayAdapter implements Fil
             sb.append("?key=" + API_KEY);
             sb.append("&components=country:br");
             sb.append("&language=br");
-            //sb.append("&types=(cities)");
-//            sb.append("&types=geocode");
             sb.append("&types=").append(TYPE);
             if (parentTextView != null) {
                 String complement = this.parentTextView.getText().toString();
@@ -165,7 +163,7 @@ public class GooglePlacesAutocompleteAdapter extends ArrayAdapter implements Fil
                             predsJsonArray.getJSONObject(i).getJSONArray("terms").getJSONObject(1).get("value"));
                 } else {
                     JSONObject city = predsJsonArray.getJSONObject(i).getJSONObject("structured_formatting");
-                    resultList.add(city.getString("main_text")/*+", "+city.getString("secondary_text")*/);
+                    resultList.add(city.getString("main_text"));
                 }
             }
         } catch (JSONException e) {
